@@ -17,4 +17,5 @@ public class ProductDto {
     private Double discountPrice;
     private String imageUrl;
     private String description;
+    private String categoryName;
 }
