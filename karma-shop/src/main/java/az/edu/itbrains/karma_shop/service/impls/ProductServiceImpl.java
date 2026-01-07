@@ -1,6 +1,6 @@
 package az.edu.itbrains.karma_shop.service.impls;
 
-import az.edu.itbrains.karma_shop.dto.ProductDto;
+import az.edu.itbrains.karma_shop.dto.product.ProductDto;
 import az.edu.itbrains.karma_shop.repository.ProductRepository;
 import az.edu.itbrains.karma_shop.service.ProductService;
 import lombok.RequiredArgsConstructor;

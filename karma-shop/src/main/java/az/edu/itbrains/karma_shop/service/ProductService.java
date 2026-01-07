@@ -1,6 +1,6 @@
 package az.edu.itbrains.karma_shop.service;
 
-import az.edu.itbrains.karma_shop.dto.ProductDto;
+import az.edu.itbrains.karma_shop.dto.product.ProductDto;
 
 import java.util.List;
 

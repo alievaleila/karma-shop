@@ -1,4 +1,4 @@
-package az.edu.itbrains.karma_shop.dto;
+package az.edu.itbrains.karma_shop.dto.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
