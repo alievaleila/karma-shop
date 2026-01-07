@@ -1,6 +1,8 @@
 package az.edu.itbrains.karma_shop.controller;
 
+import az.edu.itbrains.karma_shop.dto.category.CategoryDto;
 import az.edu.itbrains.karma_shop.dto.product.ProductDto;
+import az.edu.itbrains.karma_shop.service.CategoryService;
 import az.edu.itbrains.karma_shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import java.util.List;
 public class HomeController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -33,7 +36,9 @@ public class HomeController {
     }
 
     @GetMapping("/category")
-    public String category() {
+    public String category(Model model) {
+        List<CategoryDto>categoryDtoList=categoryService.getAllCategories();
+        model.addAttribute("categories",categoryDtoList);
         return "category";
     }
 
