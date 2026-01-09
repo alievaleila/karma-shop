@@ -12,47 +12,61 @@
         <div class="container">
             <div class="row fullscreen align-items-center justify-content-start">
                 <div class="col-lg-12">
-                    <div class="active-banner-slider owl-carousel">
-                        <!-- single-slide -->
+                    <style>
+                        .owl-dots, .owl-nav {
+                            display: none !important;
+                            opacity: 0 !important;
+                            height: 0 !important;
+                            width: 0 !important;
+                            overflow: hidden !important;
+                        }
+                        .owl-dot img, .owl-dot span {
+                            display: none !important;
+                        }
+                    </style>
+                    <div class="active-banner-slider owl-carousel" data-mouse-drag="true" data-touch-drag="true">
                         <div class="row single-slide align-items-center d-flex">
                             <div class="col-lg-5 col-md-6">
                                 <div class="banner-content">
                                     <h1>Nike New <br>Collection!</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                                    <p>Discover the newest Nike drops at unbeatable prices. From professional running
+                                        gear to classic everyday sneakers, we have the perfect fit.</p>
                                     <div class="add-bag d-flex align-items-center">
                                         <a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-                                        <span class="add-text text-uppercase">Add to Bag</span>
+                                        <span class="add-text text-uppercase">Shop Now</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-7">
                                 <div class="banner-img">
-                                    <img class="img-fluid" src="/front/img/banner/banner-img.png" alt="">
+                                    <img class="img-fluid"
+                                         src="https://cdn.pixabay.com/photo/2018/09/27/10/47/sneakers-3706746_1280.jpg"
+                                         alt="Nike Banner">
                                 </div>
                             </div>
                         </div>
-                        <!-- single-slide -->
-                        <div class="row single-slide">
-                            <div class="col-lg-5">
+
+                        <div class="row single-slide align-items-center d-flex">
+                            <div class="col-lg-5 col-md-6">
                                 <div class="banner-content">
-                                    <h1>Nike New <br>Collection!</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                                    <h1>Exclusive <br>Adidas Gear!</h1>
+                                    <p>Push your limits with the new Adidas Ultraboost series. Experience maximum energy
+                                        return and premium comfort in every single step.</p>
                                     <div class="add-bag d-flex align-items-center">
                                         <a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-                                        <span class="add-text text-uppercase">Add to Bag</span>
+                                        <span class="add-text text-uppercase">View Details</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-7">
                                 <div class="banner-img">
-                                    <img class="img-fluid" src="/front/img/banner/banner-img.png" alt="">
+                                    <img class="img-fluid"
+                                         src="https://cdn.pixabay.com/photo/2017/07/13/02/53/shoe-2498994_1280.jpg"
+                                         alt="Adidas Banner">
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -186,10 +200,8 @@
                     <div class="col-lg-6 text-center">
                         <div class="section-title">
                             <h1>Latest Products</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et
-                                dolore
-                                magna aliqua.</p>
+                            <p>Explore our newest collection of premium sneakers. From high-performance running shoes to
+                                iconic street style, find the perfect pair for your journey.</p>
                         </div>
                     </div>
                 </div>
@@ -751,5 +763,23 @@
     </section>
     <!-- End related-product Area -->
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var owl = $('.active-banner-slider');
+        owl.owlCarousel({
+            items: 1,
+            loop: true,
+            margin: 0,
+            nav: false,
+            dots: false,
+            mouseDrag: true,
+            touchDrag: true,
+            pullDrag: true,
+            autoplay: true,
+            autoplayTimeout: 5000
+        });
+    });
+</script>
 </body>
 </html>
