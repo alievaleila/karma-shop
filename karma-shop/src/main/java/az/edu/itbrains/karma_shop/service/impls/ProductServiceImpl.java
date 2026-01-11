@@ -23,4 +23,10 @@ public class ProductServiceImpl implements ProductService {
                 .map(product -> modelMapper.map(product, ProductDto.class)).toList();
         return productDtoList;
     }
+
+    @Override
+    public List<ProductDto> getProductsByCategoryId(Long categoryId) {
+        return productRepository.findAllByCategoryId(categoryId).stream().map(p -> modelMapper
+                .map(p, ProductDto.class)).toList();
+    }
 }

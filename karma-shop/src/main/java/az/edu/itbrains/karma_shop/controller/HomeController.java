@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -36,9 +37,18 @@ public class HomeController {
     }
 
     @GetMapping("/category")
-    public String category(Model model) {
-        List<CategoryDto>categoryDtoList=categoryService.getAllCategories();
-        model.addAttribute("categories",categoryDtoList);
+    public String category(@RequestParam(value = "id", required = false) Long categoryId, Model model) {
+        List<CategoryDto> categoryDtoList = categoryService.getAllCategories();
+        model.addAttribute("categories", categoryDtoList);
+        List<ProductDto> productDtoList;
+
+        if (categoryId != null) {
+            productDtoList = productService.getProductsByCategoryId(categoryId);
+        } else {
+            productDtoList = productService.getAllProducts();
+        }
+
+        model.addAttribute("products", productDtoList);
         return "category";
     }
 
