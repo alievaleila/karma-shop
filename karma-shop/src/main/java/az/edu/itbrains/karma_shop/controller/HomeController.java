@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -82,8 +83,10 @@ public class HomeController {
         return "single-blog";
     }
 
-    @GetMapping("/single-product")
-    public String singleProduct() {
+    @GetMapping("/product/{id}")
+    public String productDetail(@PathVariable Long id, Model model) {
+        ProductDto productDto = productService.getById(id);
+        model.addAttribute("product", productDto);
         return "single-product";
     }
 

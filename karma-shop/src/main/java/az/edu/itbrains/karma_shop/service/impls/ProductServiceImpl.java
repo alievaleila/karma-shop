@@ -1,6 +1,7 @@
 package az.edu.itbrains.karma_shop.service.impls;
 
 import az.edu.itbrains.karma_shop.dto.product.ProductDto;
+import az.edu.itbrains.karma_shop.model.Product;
 import az.edu.itbrains.karma_shop.repository.ProductRepository;
 import az.edu.itbrains.karma_shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getProductsByCategoryId(Long categoryId) {
-        return productRepository.findAllByCategoryId(categoryId).stream().map(p -> modelMapper
-                .map(p, ProductDto.class)).toList();
+        return productRepository.findTop6ByCategoryIdOrderByIdDesc(categoryId)
+                .stream()
+                .map(p -> modelMapper.map(p, ProductDto.class)).toList();
+    }
+
+    @Override
+    public ProductDto getById(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found " + id));
+        return modelMapper.map(product, ProductDto.class);
     }
 }
