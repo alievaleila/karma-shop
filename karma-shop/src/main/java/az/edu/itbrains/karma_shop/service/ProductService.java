@@ -11,4 +11,6 @@ public interface ProductService {
     List<ProductDto> getProductsByCategoryId(Long categoryId);
 
     ProductDto getById(Long id);
+
+    List<ProductDto> filterTop6(Long categoryId, Long brandId, Long colorId, Double minPrice, Double maxPrice);
 }

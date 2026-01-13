@@ -2,7 +2,9 @@ package az.edu.itbrains.karma_shop.controller;
 
 import az.edu.itbrains.karma_shop.dto.category.CategoryDto;
 import az.edu.itbrains.karma_shop.dto.product.ProductDto;
+import az.edu.itbrains.karma_shop.service.BrandService;
 import az.edu.itbrains.karma_shop.service.CategoryService;
+import az.edu.itbrains.karma_shop.service.ColorService;
 import az.edu.itbrains.karma_shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ public class HomeController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final BrandService brandService;
+    private final ColorService colorService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -38,16 +42,27 @@ public class HomeController {
     }
 
     @GetMapping("/category")
-    public String category(@RequestParam(value = "id", required = false) Long categoryId, Model model) {
+    public String category(
+            @RequestParam(value = "id", required = false) Long categoryId,
+            @RequestParam(value = "brandId", required = false) Long brandId,
+            @RequestParam(value = "colorId", required = false) Long colorId,
+            @RequestParam(value = "minPrice", required = false) Double minPrice,
+            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+            Model model
+    ) {
         List<CategoryDto> categoryDtoList = categoryService.getAllCategories();
         model.addAttribute("categories", categoryDtoList);
-        List<ProductDto> productDtoList;
 
-        if (categoryId != null) {
-            productDtoList = productService.getProductsByCategoryId(categoryId);
-        } else {
-            productDtoList = productService.getAllProducts();
-        }
+        model.addAttribute("brands", brandService.getAll());
+        model.addAttribute("colors", colorService.getAll());
+
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("brandId", brandId);
+        model.addAttribute("colorId", colorId);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+
+        List<ProductDto> productDtoList = productService.filterTop6(categoryId, brandId, colorId, minPrice, maxPrice);
 
         model.addAttribute("products", productDtoList);
         return "category";

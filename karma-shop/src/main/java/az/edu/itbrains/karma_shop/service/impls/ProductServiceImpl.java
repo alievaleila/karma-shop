@@ -37,4 +37,10 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found " + id));
         return modelMapper.map(product, ProductDto.class);
     }
+
+    @Override
+    public List<ProductDto> filterTop6(Long categoryId, Long brandId, Long colorId, Double minPrice, Double maxPrice) {
+        return productRepository.filterTop6(categoryId, brandId, colorId, minPrice, maxPrice)
+                .stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
+    }
 }

@@ -55,60 +55,101 @@
                     <div class="top-filter-head">Product Filters</div>
                     <div class="common-filter">
                         <div class="head">Brands</div>
-                        <form action="#">
+
+                        <form th:action="@{/category}" method="get" id="brandForm">
+                            <!-- category seçilibsə itirməsin -->
+                            <input type="hidden" name="id" th:value="${categoryId}"/>
+
+                            <!-- color seçilibsə itirməsin -->
+                            <input type="hidden" name="colorId" th:value="${colorId}"/>
+
+                            <!-- price seçilibsə itirməsin -->
+                            <input type="hidden" name="minPrice" th:value="${minPrice}"/>
+                            <input type="hidden" name="maxPrice" th:value="${maxPrice}"/>
+
                             <ul>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label
-                                        for="apple">Apple<span>(29)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="asus"
-                                                               name="brand"><label
-                                        for="asus">Asus<span>(29)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="gionee"
-                                                               name="brand"><label for="gionee">Gionee<span>(19)</span></label>
+                                <li class="filter-list" th:each="b : ${brands}">
+                                    <input class="pixel-radio"
+                                           type="radio"
+                                           name="brandId"
+                                           th:id="${'brand' + b.id}"
+                                           th:value="${b.id}"
+                                           th:checked="${brandId != null and b.id == brandId}"
+                                           onchange="document.getElementById('brandForm').submit();"/>
+
+                                    <label th:for="${'brand' + b.id}">
+                                        <span th:text="${b.name}">Brand</span>
+                                    </label>
                                 </li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="micromax"
-                                                               name="brand"><label
-                                        for="micromax">Micromax<span>(19)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="samsung"
-                                                               name="brand"><label
-                                        for="samsung">Samsung<span>(19)</span></label></li>
                             </ul>
                         </form>
                     </div>
+
                     <div class="common-filter">
                         <div class="head">Color</div>
-                        <form action="#">
+
+                        <form th:action="@{/category}" method="get" id="colorForm">
+                            <!-- category seçilibsə itirməsin -->
+                            <input type="hidden" name="id" th:value="${categoryId}"/>
+
+                            <!-- brand seçilibsə itirməsin -->
+                            <input type="hidden" name="brandId" th:value="${brandId}"/>
+
+                            <!-- price seçilibsə itirməsin -->
+                            <input type="hidden" name="minPrice" th:value="${minPrice}"/>
+                            <input type="hidden" name="maxPrice" th:value="${maxPrice}"/>
+
                             <ul>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label
-                                        for="black">Black<span>(29)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather"
-                                                               name="color"><label for="balckleather">Black
-                                    Leather<span>(29)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred"
-                                                               name="color"><label for="blackred">Black
-                                    with red<span>(19)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="gold"
-                                                               name="color"><label
-                                        for="gold">Gold<span>(19)</span></label></li>
-                                <li class="filter-list"><input class="pixel-radio" type="radio" id="spacegrey"
-                                                               name="color"><label
-                                        for="spacegrey">Spacegrey<span>(19)</span></label></li>
+                                <li class="filter-list" th:each="c : ${colors}">
+                                    <input class="pixel-radio"
+                                           type="radio"
+                                           name="colorId"
+                                           th:id="${'color' + c.id}"
+                                           th:value="${c.id}"
+                                           th:checked="${colorId != null and c.id == colorId}"
+                                           onchange="document.getElementById('colorForm').submit();"/>
+
+                                    <label th:for="${'color' + c.id}">
+                                        <span th:text="${c.name}">Color</span>
+                                    </label>
+                                </li>
                             </ul>
                         </form>
                     </div>
+
                     <div class="common-filter">
                         <div class="head">Price</div>
-                        <div class="price-range-area">
-                            <div id="price-range"></div>
-                            <div class="value-wrapper d-flex">
-                                <div class="price">Price:</div>
-                                <span>$</span>
-                                <div id="lower-value"></div>
-                                <div class="to">to</div>
-                                <span>$</span>
-                                <div id="upper-value"></div>
+
+                        <form th:action="@{/category}" method="get" id="priceForm">
+                            <!-- category seçilibsə itirməsin -->
+                            <input type="hidden" name="id" th:value="${categoryId}"/>
+
+                            <!-- brand seçilibsə itirməsin -->
+                            <input type="hidden" name="brandId" th:value="${brandId}"/>
+
+                            <!-- color seçilibsə itirməsin -->
+                            <input type="hidden" name="colorId" th:value="${colorId}"/>
+
+                            <div class="price-range-area">
+                                <div id="price-range"></div>
+                                <div class="value-wrapper d-flex">
+                                    <div class="price">Price:</div>
+                                    <span>$</span>
+                                    <div id="lower-value" th:text="${minPrice}"></div>
+                                    <div class="to">to</div>
+                                    <span>$</span>
+                                    <div id="upper-value" th:text="${maxPrice}"></div>
+                                </div>
                             </div>
-                        </div>
+
+                            <!-- hidden input-larla minPrice və maxPrice göndəririk -->
+                            <input type="hidden" name="minPrice" th:value="${minPrice}"/>
+                            <input type="hidden" name="maxPrice" th:value="${maxPrice}"/>
+
+                            <button type="submit">Filter</button>
+                        </form>
                     </div>
+
                 </div>
             </div>
             <div class="col-xl-9 col-lg-8 col-md-7">
@@ -342,5 +383,22 @@
     </section>
     <!-- End related-product Area -->
 </div>
+
+$(function() {
+$("#price-range").slider({
+range: true,
+min: 0,
+max: 1000,
+values: [0, 500],
+slide: function(event, ui) {
+$("#lower-value").text(ui.values[0]);
+$("#upper-value").text(ui.values[1]);
+
+$("input[name='minPrice']").val(ui.values[0]);
+$("input[name='maxPrice']").val(ui.values[1]);
+}
+});
+});
+
 </body>
 </html>
