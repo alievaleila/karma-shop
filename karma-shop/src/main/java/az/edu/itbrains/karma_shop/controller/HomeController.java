@@ -1,10 +1,12 @@
 package az.edu.itbrains.karma_shop.controller;
 
 import az.edu.itbrains.karma_shop.dto.category.CategoryDto;
+import az.edu.itbrains.karma_shop.dto.deal.DealDto;
 import az.edu.itbrains.karma_shop.dto.product.ProductDto;
 import az.edu.itbrains.karma_shop.service.BrandService;
 import az.edu.itbrains.karma_shop.service.CategoryService;
 import az.edu.itbrains.karma_shop.service.ColorService;
+import az.edu.itbrains.karma_shop.service.DealService;
 import az.edu.itbrains.karma_shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ public class HomeController {
     private final CategoryService categoryService;
     private final BrandService brandService;
     private final ColorService colorService;
+    private final DealService dealService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -65,6 +68,9 @@ public class HomeController {
         List<ProductDto> productDtoList = productService.filterTop6(categoryId, brandId, colorId, minPrice, maxPrice);
 
         model.addAttribute("products", productDtoList);
+
+        List<DealDto>dealDtoList=dealService.getAllDeals();
+        model.addAttribute("deals",dealDtoList);
         return "category";
     }
 
@@ -107,6 +113,5 @@ public class HomeController {
 
     @GetMapping("/tracking")
     public String tracking() {
-        return "tracking";
-    }
+        return "tracking";}
 }

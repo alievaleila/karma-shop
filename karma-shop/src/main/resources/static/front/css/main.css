@@ -7,6 +7,81 @@
 /* Wide Mobile Layout: 480px */
 /* Section Gaps css
 ============================================================================================ */
+
+.single-related-product img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+
+.single-product img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+
+.single-related-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.single-related-product img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+
+.single-related-product .desc {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.single-related-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.single-related-product img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+
+.single-related-product .desc {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.sidebar-categories ul.main-categories {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-categories li {
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+
+.sidebar-filter input[type="radio"] {
+    margin-right: 5px;
+}
+
 .no-padding {
   padding: 0; }
 
