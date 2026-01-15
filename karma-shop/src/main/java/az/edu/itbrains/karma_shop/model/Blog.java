@@ -3,10 +3,12 @@ package az.edu.itbrains.karma_shop.model;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name="blogs")
 public class Blog {
 
     @Id
@@ -30,16 +34,16 @@ public class Blog {
     private String content;
     private String imageUrl;
 
-    @Column(name="author_name")
+    @Column(name = "author_name")
     private String author;
 
-    @Column(name="publish_date")
+    @Column(name = "publish_date")
     private LocalDateTime publishDate;
 
-    @Column(name="views")
+    @Column(name = "views")
     private Long views;
 
-    @Column(name="comments")
+    @Column(name = "comments")
     private Long comments;
 
     @ElementCollection
