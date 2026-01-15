@@ -1,8 +1,10 @@
 package az.edu.itbrains.karma_shop.controller;
 
+import az.edu.itbrains.karma_shop.dto.blog.BlogDto;
 import az.edu.itbrains.karma_shop.dto.category.CategoryDto;
 import az.edu.itbrains.karma_shop.dto.deal.DealDto;
 import az.edu.itbrains.karma_shop.dto.product.ProductDto;
+import az.edu.itbrains.karma_shop.service.BlogService;
 import az.edu.itbrains.karma_shop.service.BrandService;
 import az.edu.itbrains.karma_shop.service.CategoryService;
 import az.edu.itbrains.karma_shop.service.ColorService;
@@ -26,6 +28,7 @@ public class HomeController {
     private final BrandService brandService;
     private final ColorService colorService;
     private final DealService dealService;
+    private final BlogService blogService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -35,7 +38,9 @@ public class HomeController {
     }
 
     @GetMapping("/blog")
-    public String blog() {
+    public String blog(Model model) {
+        List<BlogDto>blogDtoList=blogService.getAllBlogs();
+        model.addAttribute("blogs",blogDtoList);
         return "blog";
     }
 
