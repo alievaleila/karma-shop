@@ -88,7 +88,9 @@
                                     </div>
                                     <ul class="blog_meta list">
                                         <li><a href="#" th:text="${blog.authorName}">Author Name<i class="lnr lnr-user"></i></a></li>
-                                        <li><a href="#" th:text="${#dates.format(blog.publishDate, 'dd MMM, yyyy')}">Date<i class="lnr lnr-calendar-full"></i></a></li>
+                                        <li><a href="#" th:text="${#temporals.format(blog.publishDate, 'dd MMM, yyyy')}">
+                                            Date <i class="lnr lnr-calendar-full"></i>
+                                        </a></li>
                                         <li><a href="#" th:text="${blog.views}">1.2M Views<i class="lnr lnr-eye"></i></a></li>
                                         <li><a href="#" th:text="${blog.comments}">06 Comments<i class="lnr lnr-bubble"></i></a></li>
                                     </ul>

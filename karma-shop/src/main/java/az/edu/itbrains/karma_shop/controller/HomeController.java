@@ -4,6 +4,7 @@ import az.edu.itbrains.karma_shop.dto.blog.BlogDto;
 import az.edu.itbrains.karma_shop.dto.category.CategoryDto;
 import az.edu.itbrains.karma_shop.dto.deal.DealDto;
 import az.edu.itbrains.karma_shop.dto.product.ProductDto;
+import az.edu.itbrains.karma_shop.model.Blog;
 import az.edu.itbrains.karma_shop.service.BlogService;
 import az.edu.itbrains.karma_shop.service.BrandService;
 import az.edu.itbrains.karma_shop.service.CategoryService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -105,7 +107,8 @@ public class HomeController {
     }
 
     @GetMapping("/single-blog")
-    public String singleBlog() {
+    public String singleBlog()
+    {
         return "single-blog";
     }
 
@@ -113,6 +116,7 @@ public class HomeController {
     public String productDetail(@PathVariable Long id, Model model) {
         ProductDto productDto = productService.getById(id);
         model.addAttribute("product", productDto);
+        System.out.println("PRODUCT -> " + productDto.getId() + " | " + productDto.getName());
         return "single-product";
     }
 

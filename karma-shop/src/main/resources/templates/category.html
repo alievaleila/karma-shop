@@ -36,14 +36,14 @@
 
                                 <span th:text="${c.name}">Fruits and Vegetables</span>
 
-                                <span class="number">(30)</span>
+                                <span class="number">(9)</span>
                             </a>
 
                             <ul class="collapse" th:id="${'cat' + c.id}" data-toggle="collapse">
                                 <li th:each="sub : ${c.subCategories}" class="main-nav-list child">
                                     <a th:href="@{/category(id=${sub.id})}">
                                         <span th:text="${sub.name}">Frozen Fish</span>
-                                        <span class="number">(6)</span>
+                                        <span class="number">(3)</span>
                                     </a>
                                 </li>
                             </ul>
