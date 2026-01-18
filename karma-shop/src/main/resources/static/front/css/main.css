@@ -7,24 +7,29 @@
 /* Wide Mobile Layout: 480px */
 /* Section Gaps css
 ============================================================================================ */
-
-
+/* .single-related-product img üçün uyğun tərtibat */
+/* .single-related-product img üçün uyğun tərtibat */
+/* .single-related-product img üçün uyğun tərtibat */
+/* .single-related-product img üçün uyğun tərtibat */
 .single-related-product img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
+    width: 100%; /* Şəkil tam genişliyi əhatə edir */
+    height: auto; /* Hündürlük avtomatik */
+    object-fit: cover; /* Şəkili konteynerə uyğunlaşdırır */
+    display: block; /* Blok element olaraq göstər */
+    margin: 10px;  /* Aralıq əlavə olunur */
+    overflow: hidden; /* Şəkil konteynerdən daşmasın */
 }
 
-
+/* .single-product img üçün uyğun tərtibat */
 .single-product img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    display: block;
+    width: 100%;  /* Şəkil tam genişliyi əhatə edir */
+    max-width: 300px;  /* Maksimum genişlik təyin edilir */
+    height: auto;  /* Hündürlük avtomatik */
+    object-fit: cover; /* Şəkili konteynerə uyğunlaşdırır */
+    display: block; /* Blok element olaraq göstər */
 }
 
-
+/* .single-related-product konteyneri üçün tərtibat */
 .single-related-product {
     display: flex;
     flex-direction: column;
@@ -33,45 +38,18 @@
     margin-bottom: 20px;
 }
 
-.single-related-product img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    display: block;
-}
-
-
+/* .desc sinfi üçün tərtibat */
 .single-related-product .desc {
     text-align: center;
     margin-top: 10px;
 }
 
-.single-related-product {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-
-.single-related-product img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    display: block;
-}
-
-
-.single-related-product .desc {
-    text-align: center;
-    margin-top: 10px;
-}
-
+/* Sidebar kategoriya listəsinin tərtibatı */
 .sidebar-categories ul.main-categories {
     list-style: none;
     padding: 0;
 }
+
 
 .sidebar-categories li {
     padding: 10px 0;

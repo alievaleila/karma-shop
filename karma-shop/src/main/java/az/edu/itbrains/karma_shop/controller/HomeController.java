@@ -112,6 +112,11 @@ public class HomeController {
         return "single-blog";
     }
 
+    @GetMapping("/single-product")
+    public String singleProduct(){
+        return "single-product";
+    }
+
     @GetMapping("/product/{id}")
     public String productDetail(@PathVariable Long id, Model model) {
         ProductDto productDto = productService.getById(id);
