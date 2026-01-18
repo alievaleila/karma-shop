@@ -1,5 +1,6 @@
 package az.edu.itbrains.karma_shop.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,8 @@ public class Product {
     private String name;
     private Double price;
     private Double discountPrice;
+
+    @Column(name = "image_url")
     private String imageUrl;
     private String description;
 

@@ -12,21 +12,19 @@
 /* .single-related-product img üçün uyğun tərtibat */
 /* .single-related-product img üçün uyğun tərtibat */
 .single-related-product img {
-    width: 100%; /* Şəkil tam genişliyi əhatə edir */
-    height: auto; /* Hündürlük avtomatik */
-    object-fit: cover; /* Şəkili konteynerə uyğunlaşdırır */
-    display: block; /* Blok element olaraq göstər */
-    margin: 10px;  /* Aralıq əlavə olunur */
-    overflow: hidden; /* Şəkil konteynerdən daşmasın */
+    width: 100%;
+    height: 300px;      /* <-- bunu yaz */
+    object-fit: cover;
+    display: block;
+    margin: 10px;
 }
 
-/* .single-product img üçün uyğun tərtibat */
 .single-product img {
-    width: 100%;  /* Şəkil tam genişliyi əhatə edir */
-    max-width: 300px;  /* Maksimum genişlik təyin edilir */
-    height: auto;  /* Hündürlük avtomatik */
-    object-fit: cover; /* Şəkili konteynerə uyğunlaşdırır */
-    display: block; /* Blok element olaraq göstər */
+    width: 100%;
+    max-width: 300px;
+    height: 300px;      /* <-- bunu yaz */
+    object-fit: cover;
+    display: block;
 }
 
 /* .single-related-product konteyneri üçün tərtibat */
