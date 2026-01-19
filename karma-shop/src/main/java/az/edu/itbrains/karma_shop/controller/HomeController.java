@@ -4,7 +4,6 @@ import az.edu.itbrains.karma_shop.dto.blog.BlogDto;
 import az.edu.itbrains.karma_shop.dto.category.CategoryDto;
 import az.edu.itbrains.karma_shop.dto.deal.DealDto;
 import az.edu.itbrains.karma_shop.dto.product.ProductDto;
-import az.edu.itbrains.karma_shop.model.Blog;
 import az.edu.itbrains.karma_shop.service.BlogService;
 import az.edu.itbrains.karma_shop.service.BrandService;
 import az.edu.itbrains.karma_shop.service.CategoryService;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -41,8 +39,8 @@ public class HomeController {
 
     @GetMapping("/blog")
     public String blog(Model model) {
-        List<BlogDto>blogDtoList=blogService.getAllBlogs();
-        model.addAttribute("blogs",blogDtoList);
+        List<BlogDto> blogDtoList = blogService.getAllBlogs();
+        model.addAttribute("blogs", blogDtoList);
         return "blog";
     }
 
@@ -76,8 +74,8 @@ public class HomeController {
 
         model.addAttribute("products", productDtoList);
 
-        List<DealDto>dealDtoList=dealService.getAllDeals();
-        model.addAttribute("deals",dealDtoList);
+        List<DealDto> dealDtoList = dealService.getAllDeals();
+        model.addAttribute("deals", dealDtoList);
         return "category";
     }
 
@@ -101,19 +99,13 @@ public class HomeController {
         return "elements";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
     @GetMapping("/single-blog")
-    public String singleBlog()
-    {
+    public String singleBlog() {
         return "single-blog";
     }
 
     @GetMapping("/single-product")
-    public String singleProduct(){
+    public String singleProduct() {
         return "single-product";
     }
 
@@ -127,5 +119,6 @@ public class HomeController {
 
     @GetMapping("/tracking")
     public String tracking() {
-        return "tracking";}
+        return "tracking";
+    }
 }
