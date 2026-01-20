@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+<head>
+    <title>Register</title>
+    <style>
+        .login_box_img {
+            background-image: url('/front/img/login.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            min-height: 420px;
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Create an Account</h1>
+                    <nav class="d-flex align-items-center">
+                        <a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a th:href="@{/register}">Create an Account</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="login_box_area section_gap">
+        <div class="container">
+            <div class="row">
+
+                <!-- SOL: ŞƏKİL -->
+                <div class="col-lg-6">
+                    <div class="login_box_img">
+                        <!-- şəkil background-image ilə gəlir -->
+                    </div>
+                </div>
+
+                <!-- SAĞ: FORM -->
+                <div class="col-lg-6">
+                    <div class="login_form_inner">
+                        <h3>Create a new account</h3>
+
+                        <form class="row login_form" th:action="@{/register}" method="post">
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="username" name="username"
+                                       placeholder="Username"
+                                       onfocus="this.placeholder=''" onblur="this.placeholder='Username'">
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="Password"
+                                       onfocus="this.placeholder=''" onblur="this.placeholder='Password'">
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                       placeholder="Confirm Password"
+                                       onfocus="this.placeholder=''" onblur="this.placeholder='Confirm Password'">
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <button type="submit" class="primary-btn">Create Account</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>
