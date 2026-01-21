@@ -10,9 +10,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItemDto {
+
     private Long productId;
     private String title;
     private String imageUrl;
     private double price;
     private int quantity;
+
+    public double getTotal() {
+        return quantity * price;
+    }
 }

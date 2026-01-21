@@ -44,11 +44,6 @@ public class HomeController {
         return "blog";
     }
 
-    @GetMapping("/cart")
-    public String cart() {
-        return "cart";
-    }
-
     @GetMapping("/category")
     public String category(
             @RequestParam(value = "id", required = false) Long categoryId,
