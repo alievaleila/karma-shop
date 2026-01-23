@@ -11,6 +11,9 @@
 /* .single-related-product img üçün uyğun tərtibat */
 /* .single-related-product img üçün uyğun tərtibat */
 /* .single-related-product img üçün uyğun tərtibat */
+/* CSS */
+
+/* reset və override - tətbiq et və yoxla */
 .single-related-product img {
     width: 100%;
     height: 300px;      /* <-- bunu yaz */

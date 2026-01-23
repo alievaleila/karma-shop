@@ -9,4 +9,6 @@ public interface CartService {
     List<Cart> getCartItemsByUsername(String username);
 
     double calculateSubtotal(List<Cart> cartItems);
+
+    void addToCart(String username, Long productId);
 }
