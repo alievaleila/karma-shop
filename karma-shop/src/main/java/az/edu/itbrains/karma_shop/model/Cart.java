@@ -35,4 +35,8 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public double getTotal() {
+        return this.quantity * this.price;
+    }
 }

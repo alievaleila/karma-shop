@@ -14,6 +14,13 @@
 /* CSS */
 
 /* reset və override - tətbiq et və yoxla */
+.product-img img {
+    width: 100%;    /* Şəkilin eni konteynerin eni qədər olmalı */
+    height: auto;   /* Hündürlüyü avtomatik uyğunlaşdırır ki, şəkil orantılı qalır */
+    object-fit: contain;  /* Şəkilin konteynerə uyğun sığmasını təmin edir */
+    max-width: 400px;  /* Maksimum eni təyin edir */
+    max-height: 300px; /* Maksimum hündürlüyü təyin edir */
+}
 .single-related-product img {
     width: 100%;
     height: 300px;      /* <-- bunu yaz */

@@ -18,6 +18,6 @@ public class CartItemDto {
     private int quantity;
 
     public double getTotal() {
-        return quantity * price;
+        return this.quantity * this.price;
     }
 }
