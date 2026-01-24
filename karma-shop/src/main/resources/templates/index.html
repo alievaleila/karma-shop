@@ -218,25 +218,24 @@
                                     <h6 th:text="${p.price}" class="l-through">$210.00</h6>
                                 </div>
                                 <div class="prd-bottom">
-                                    <form th:action="@{/cart/add}" method="post" class="add-to-cart-form">
+                                    <form th:action="@{/cart/add}" method="post" class="social-info-form">
                                         <input type="hidden" name="productId" th:value="${p.id}" />
-                                        <button type="submit" class="social-info" aria-label="Add to bag">
-                                            <span class="ti-bag" aria-hidden="true"></span>
-                                            <span class="hover-text">add to bag</span>
+                                        <button type="submit" class="social-info-btn">
+                                            <span class="ti-bag"></span>
                                         </button>
+                                        <p class="hover-text">Add to bag</p>
                                     </form>
-
                                     <a href="" class="social-info">
                                         <span class="lnr lnr-heart"></span>
                                         <p class="hover-text">Wishlist</p>
                                     </a>
                                     <a href="" class="social-info">
                                         <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
+                                        <p class="hover-text">Compare</p>
                                     </a>
                                     <a th:href="@{/product/{id}(id=${p.id})}" class="social-info">
                                         <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
+                                        <p class="hover-text">View More</p>
                                     </a>
                                 </div>
                             </div>
@@ -281,11 +280,11 @@
                                     </a>
                                     <a href="" class="social-info">
                                         <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
+                                        <p class="hover-text">Compare</p>
                                     </a>
                                     <a href="" class="social-info">
                                         <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
+                                        <p class="hover-text">View More</p>
                                     </a>
                                 </div>
                             </div>
@@ -334,34 +333,23 @@
                 <div class="col-lg-6 no-padding exclusive-right">
                     <div class="active-exclusive-product-slider">
                         <!-- single exclusive carousel -->
-                        <div class="single-exclusive-slider">
-                            <img class="img-fluid" src="/front/img/product/e-p1.png" alt="">
+                        <div class="single-exclusive-slider" th:each="p,iterStat: ${products}" th:if="${iterStat.index < 2}">
+                            <img class="img-fluid" th:src="${p.imageUrl}" alt="">
                             <div class="product-details">
                                 <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
+                                    <h6 th:text="${'$' + p.discountPrice}">$150.00</h6>
+                                    <h6 class="l-through" th:text="${'$' + p.price}">$210.00</h6>
                                 </div>
-                                <h4>addidas New Hammer sole
+                                <h4 th:text="${p.name}">addidas New Hammer sole
                                     for Sports person</h4>
-                                <div class="add-bag d-flex align-items-center justify-content-center">
-                                    <a class="add-btn" href=""><span class="ti-bag"></span></a>
-                                    <span class="add-text text-uppercase">Add to Bag</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single exclusive carousel -->
-                        <div class="single-exclusive-slider">
-                            <img class="img-fluid" src="/front/img/product/e-p1.png" alt="">
-                            <div class="product-details">
-                                <div class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 class="l-through">$210.00</h6>
-                                </div>
-                                <h4>addidas New Hammer sole
-                                    for Sports person</h4>
-                                <div class="add-bag d-flex align-items-center justify-content-center">
-                                    <a class="add-btn" href=""><span class="ti-bag"></span></a>
-                                    <span class="add-text text-uppercase">Add to Bag</span>
+                                <div class="prd-bottom">
+                                    <form th:action="@{/cart/add}" method="post" class="social-info-form">
+                                        <input type="hidden" name="productId" th:value="${p.id}" />
+                                        <button type="submit" class="social-info-btn">
+                                            <span class="ti-bag"></span>
+                                        </button>
+                                        <p class="hover-text">add to bag</p>
+                                    </form>
                                 </div>
                             </div>
                         </div>

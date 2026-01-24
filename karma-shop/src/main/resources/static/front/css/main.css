@@ -12,62 +12,10 @@
 /* .single-related-product img üçün uyğun tərtibat */
 /* .single-related-product img üçün uyğun tərtibat */
 /* CSS */
+/* Add to Bag basıldığında şəkilin ölçüsünü dəyişdirmək */
+/* Cart-item üçün ümumi stil */
+/* Cart item üçün ümumi stil */
 
-/* reset və override - tətbiq et və yoxla */
-.product-img img {
-    width: 100%;    /* Şəkilin eni konteynerin eni qədər olmalı */
-    height: auto;   /* Hündürlüyü avtomatik uyğunlaşdırır ki, şəkil orantılı qalır */
-    object-fit: contain;  /* Şəkilin konteynerə uyğun sığmasını təmin edir */
-    max-width: 400px;  /* Maksimum eni təyin edir */
-    max-height: 300px; /* Maksimum hündürlüyü təyin edir */
-}
-.single-related-product img {
-    width: 100%;
-    height: 300px;      /* <-- bunu yaz */
-    object-fit: cover;
-    display: block;
-    margin: 10px;
-}
-
-.single-product img {
-    width: 100%;
-    max-width: 300px;
-    height: 300px;      /* <-- bunu yaz */
-    object-fit: cover;
-    display: block;
-}
-
-/* .single-related-product konteyneri üçün tərtibat */
-.single-related-product {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-/* .desc sinfi üçün tərtibat */
-.single-related-product .desc {
-    text-align: center;
-    margin-top: 10px;
-}
-
-/* Sidebar kategoriya listəsinin tərtibatı */
-.sidebar-categories ul.main-categories {
-    list-style: none;
-    padding: 0;
-}
-
-
-.sidebar-categories li {
-    padding: 10px 0;
-    cursor: pointer;
-}
-
-
-.sidebar-filter input[type="radio"] {
-    margin-right: 5px;
-}
 
 .no-padding {
   padding: 0; }
@@ -116,7 +64,7 @@
 
 /* Start Gradient Area css
 ============================================================================================ */
-.gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a.active, .pagination a:hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link, .single-footer-widget .click-btn {
+.gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a.active, .pagination a:hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link, .single-footer-widget .click-btn {
   background: -webkit-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
   background: -moz-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
   background: -o-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
@@ -1592,7 +1540,25 @@ h1, h2, h3, h4, h5, h6 {
       -moz-transition: all 0.3s ease 0s;
       -o-transition: all 0.3s ease 0s;
       transition: all 0.3s ease 0s;
-      overflow: hidden; }
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      vertical-align: top; }
+    .single-product .product-details .prd-bottom button.social-info {
+      position: relative;
+      display: inline-block;
+      width: 35px;
+      -webkit-transition: all 0.3s ease 0s;
+      -moz-transition: all 0.3s ease 0s;
+      -o-transition: all 0.3s ease 0s;
+      transition: all 0.3s ease 0s;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      vertical-align: top;
+      border: none;
+      background: none;
+      cursor: pointer; }
       .single-product .product-details .prd-bottom .social-info span {
         position: relative;
         height: 30px;
@@ -1635,7 +1601,29 @@ h1, h2, h3, h4, h5, h6 {
         -o-transition: all 0.3s ease 0s;
         transition: all 0.3s ease 0s;
         opacity: 0;
-        visibility: hidden; }
+        visibility: hidden;
+        margin: 0;
+        padding: 0; }
+      .single-product .product-details .prd-bottom button.social-info .hover-text {
+        position: absolute;
+        left: -40px;
+        top: 3px;
+        width: 100px;
+        text-transform: uppercase;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        font-size: 12px;
+        color: #222222;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        opacity: 0;
+        visibility: hidden;
+        margin: 0;
+        padding: 0;
+        display: inline;
+        white-space: nowrap; }
       .single-product .product-details .prd-bottom .social-info:hover {
         width: 115px; }
         .single-product .product-details .prd-bottom .social-info:hover span:after {
@@ -1645,6 +1633,80 @@ h1, h2, h3, h4, h5, h6 {
           opacity: 1;
           visibility: visible;
           left: 40px; }
+      .single-product .product-details .prd-bottom .social-info-form {
+        position: relative;
+        display: inline-block;
+        width: 35px;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        vertical-align: top; }
+        .single-product .product-details .prd-bottom .social-info-form .social-info-btn {
+          position: relative;
+          height: 30px;
+          width: 30px;
+          line-height: 30px;
+          text-align: center;
+          background: #828bb2;
+          border-radius: 50%;
+          display: inline-block;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          -webkit-transition: all 0.3s ease 0s;
+          -moz-transition: all 0.3s ease 0s;
+          -o-transition: all 0.3s ease 0s;
+          transition: all 0.3s ease 0s;
+          z-index: 1; }
+          .single-product .product-details .prd-bottom .social-info-form .social-info-btn:after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            content: "";
+            border-radius: 50%;
+            background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+            opacity: 0;
+            visibility: hidden;
+            z-index: -1;
+            -webkit-transition: all 0.3s ease 0s;
+            -moz-transition: all 0.3s ease 0s;
+            -o-transition: all 0.3s ease 0s;
+            transition: all 0.3s ease 0s; }
+        .single-product .product-details .prd-bottom .social-info-form .hover-text {
+          position: absolute;
+          left: -40px;
+          top: 5px;
+          width: 100px;
+          text-transform: uppercase;
+          font-family: "Poppins", sans-serif;
+          font-weight: 500;
+          font-size: 12px;
+          color: #222222;
+          -webkit-transition: all 0.3s ease 0s;
+          -moz-transition: all 0.3s ease 0s;
+          -o-transition: all 0.3s ease 0s;
+          transition: all 0.3s ease 0s;
+          opacity: 0;
+          visibility: hidden;
+          margin: 0;
+          padding: 0;
+          display: inline-block;
+          white-space: nowrap; }
+        .single-product .product-details .prd-bottom .social-info-form:hover {
+          width: 115px; }
+          .single-product .product-details .prd-bottom .social-info-form:hover .social-info-btn:after {
+            opacity: 1;
+            visibility: visible; }
+          .single-product .product-details .prd-bottom .social-info-form:hover .hover-text {
+            opacity: 1;
+            visibility: visible;
+            left: 40px; }
 
 /* end product area css
 ============================================================================================ */
@@ -1765,14 +1827,187 @@ h1, h2, h3, h4, h5, h6 {
       text-decoration: line-through;
       color: #cccccc;
       margin-bottom: 0; }
-    .exclusive-deal-area .exclusive-right .product-details .add-bag {
-      margin: 30px 0; }
-      .exclusive-deal-area .exclusive-right .product-details .add-bag .add-btn {
-        height: 30px;
-        width: 30px;
-        line-height: 32px; }
-        .exclusive-deal-area .exclusive-right .product-details .add-bag .add-btn span {
-          transform: rotate(0deg); }
+    .exclusive-deal-area .exclusive-right .product-details .prd-bottom {
+      position: relative;
+      margin-top: 20px; }
+      .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info {
+        position: relative;
+        display: inline-block;
+        width: 35px;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+        border: none;
+        background: none;
+        cursor: pointer; }
+      .exclusive-deal-area .exclusive-right .product-details .prd-bottom button.social-info {
+        position: relative;
+        display: inline-block;
+        width: 35px;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+        border: none;
+        background: none;
+        cursor: pointer; }
+        .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info span {
+          position: relative;
+          height: 30px;
+          width: 30px;
+          line-height: 30px;
+          text-align: center;
+          background: #828bb2;
+          border-radius: 50%;
+          display: inline-block;
+          color: #fff;
+          -webkit-transition: all 0.3s ease 0s;
+          -moz-transition: all 0.3s ease 0s;
+          -o-transition: all 0.3s ease 0s;
+          transition: all 0.3s ease 0s;
+          z-index: 1; }
+          .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info span:after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            content: "";
+            border-radius: 50%;
+            opacity: 0;
+            visibility: hidden;
+            z-index: -1; }
+        .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info .hover-text {
+          position: absolute;
+          left: 0;
+          top: 3px;
+          width: 100px;
+          left: -40px;
+          text-transform: uppercase;
+          font-family: "Poppins", sans-serif;
+          font-weight: 500;
+          font-size: 12px;
+          color: #222222;
+          -webkit-transition: all 0.3s ease 0s;
+          -moz-transition: all 0.3s ease 0s;
+          -o-transition: all 0.3s ease 0s;
+          transition: all 0.3s ease 0s;
+          opacity: 0;
+          visibility: hidden;
+          margin: 0;
+          padding: 0; }
+        .exclusive-deal-area .exclusive-right .product-details .prd-bottom button.social-info .hover-text {
+          position: absolute;
+          left: -40px;
+          top: 3px;
+          width: 100px;
+          text-transform: uppercase;
+          font-family: "Poppins", sans-serif;
+          font-weight: 500;
+          font-size: 12px;
+          color: #222222;
+          -webkit-transition: all 0.3s ease 0s;
+          -moz-transition: all 0.3s ease 0s;
+          -o-transition: all 0.3s ease 0s;
+          transition: all 0.3s ease 0s;
+          opacity: 0;
+          visibility: hidden;
+          margin: 0;
+          padding: 0;
+          display: inline;
+          white-space: nowrap; }
+        .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info:hover {
+          width: 115px; }
+          .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info:hover span:after {
+            opacity: 1;
+            visibility: visible; }
+          .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info:hover .hover-text {
+            opacity: 1;
+            visibility: visible;
+            left: 40px; }
+      .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info-form {
+        position: relative;
+        display: inline-block;
+        width: 35px;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        vertical-align: top; }
+        .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info-form .social-info-btn {
+          position: relative;
+          height: 30px;
+          width: 30px;
+          line-height: 30px;
+          text-align: center;
+          background: #828bb2;
+          border-radius: 50%;
+          display: inline-block;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          -webkit-transition: all 0.3s ease 0s;
+          -moz-transition: all 0.3s ease 0s;
+          -o-transition: all 0.3s ease 0s;
+          transition: all 0.3s ease 0s;
+          z-index: 1; }
+          .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info-form .social-info-btn:after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            content: "";
+            border-radius: 50%;
+            background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+            opacity: 0;
+            visibility: hidden;
+            z-index: -1;
+            -webkit-transition: all 0.3s ease 0s;
+            -moz-transition: all 0.3s ease 0s;
+            -o-transition: all 0.3s ease 0s;
+            transition: all 0.3s ease 0s; }
+        .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info-form .hover-text {
+          position: absolute;
+          left: -40px;
+          top: 5px;
+          width: 100px;
+          text-transform: uppercase;
+          font-family: "Poppins", sans-serif;
+          font-weight: 500;
+          font-size: 12px;
+          color: #222222;
+          -webkit-transition: all 0.3s ease 0s;
+          -moz-transition: all 0.3s ease 0s;
+          -o-transition: all 0.3s ease 0s;
+          transition: all 0.3s ease 0s;
+          opacity: 0;
+          visibility: hidden;
+          margin: 0;
+          padding: 0;
+          display: inline-block;
+          white-space: nowrap; }
+        .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info-form:hover {
+          width: 115px; }
+          .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info-form:hover .social-info-btn:after {
+            opacity: 1;
+            visibility: visible; }
+          .exclusive-deal-area .exclusive-right .product-details .prd-bottom .social-info-form:hover .hover-text {
+            opacity: 1;
+            visibility: visible;
+            left: 40px; }
 
 @media (max-width: 767px) {
   .single-img {
@@ -4345,6 +4580,12 @@ label {
     border-radius: 0; }
   .cart_inner .table tbody tr.bottom_button td .cupon_text .gray_btn {
     padding: 0px 40px; }
+  .cart_inner .table tbody tr.bottom_button td .coupon-message {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background: #f8f9fa; }
 .cart_inner .table tbody tr.shipping_area td:nth-child(3) {
   vertical-align: top; }
 .cart_inner .table tbody tr.shipping_area .shipping_box {

@@ -11,4 +11,6 @@ public interface CartService {
     double calculateSubtotal(List<Cart> cartItems);
 
     void addToCart(String username, Long productId);
+
+    void removeFromCart(String username, Long productId);
 }
