@@ -13,4 +13,6 @@ public interface CartService {
     void addToCart(String username, Long productId);
 
     void removeFromCart(String username, Long productId);
+
+    void clearCart(String username);
 }
