@@ -28,6 +28,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Optional<Order> findByOrderNumberAndEmail(String orderNumber, String email) {
+        return orderRepository.findByOrderNumberAndEmail(orderNumber, email);
+    }
+
+    @Override
     public List<Order> getOrdersByUsername(String username) {
         return orderRepository.findByUserUsernameOrderByCreatedAtDesc(username);
     }

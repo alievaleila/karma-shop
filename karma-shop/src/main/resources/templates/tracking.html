@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layout}">
 <head>
-    <title>Home</title>
+    <title>Order Tracking</title>
 </head>
 
 <body>
@@ -14,8 +15,8 @@
                 <div class="col-first">
                     <h1>Order Tracking</h1>
                     <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="category.html">Fashon Category</a>
+                        <a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a th:href="@{/tracking}">Order Tracking</a>
                     </nav>
                 </div>
             </div>
@@ -27,19 +28,157 @@
     <section class="tracking_box_area section_gap">
         <div class="container">
             <div class="tracking_box_inner">
-                <p>To track your order please enter your Order ID in the box below and press the "Track" button. This
-                    was given to you on your receipt and in the confirmation email you should have received.</p>
-                <form class="row tracking_form" action="#" method="post" novalidate="novalidate">
-                    <div class="col-md-12 form-group">
-                        <input type="text" class="form-control" id="order" name="order" placeholder="Order ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Order ID'">
+                <!-- Tracking Form -->
+                <div th:unless="${orderFound}">
+                    <p>To track your order please enter your Order ID in the box below and press the "Track" button. 
+                       This was given to you on your receipt and in the confirmation email you should have received.</p>
+                    
+                    <!-- Error Message -->
+                    <div th:if="${error}" class="alert alert-danger" style="margin-bottom: 20px;">
+                        <span th:text="${error}"></span>
                     </div>
-                    <div class="col-md-12 form-group">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Billing Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Billing Email Address'">
+                    
+                    <form class="row tracking_form" th:action="@{/tracking}" method="post">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" name="orderNumber" 
+                                   th:value="${orderNumber}" placeholder="Order Number (e.g., ORD-XXXXXX)" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="email" class="form-control" name="email" 
+                                   th:value="${email}" placeholder="Billing Email Address" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="primary-btn">Track Order</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Found - Show Details -->
+                <div th:if="${orderFound}">
+                    <div class="alert alert-success" style="margin-bottom: 30px;">
+                        <i class="fa fa-check-circle"></i> Order found successfully!
                     </div>
-                    <div class="col-md-12 form-group">
-                        <button type="submit" value="submit" class="primary-btn">Track Order</button>
+
+                    <!-- Order Status Card -->
+                    <div class="order_status_card" style="background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 style="color: #71cd14; margin-bottom: 20px;">
+                                    <i class="fa fa-shopping-bag"></i> Order #<span th:text="${order.orderNumber}"></span>
+                                </h4>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li style="margin-bottom: 10px;">
+                                        <strong>Status:</strong> 
+                                        <span class="badge" 
+                                              th:classappend="${order.status.name() == 'PENDING' ? 'badge-warning' : 
+                                                               order.status.name() == 'PROCESSING' ? 'badge-info' : 
+                                                               order.status.name() == 'SHIPPED' ? 'badge-primary' : 
+                                                               order.status.name() == 'DELIVERED' ? 'badge-success' : 
+                                                               'badge-danger'}"
+                                              th:text="${order.status}">PENDING</span>
+                                    </li>
+                                    <li style="margin-bottom: 10px;">
+                                        <strong>Order Date:</strong> 
+                                        <span th:text="${#temporals.format(order.createdAt, 'dd MMM yyyy, HH:mm')}"></span>
+                                    </li>
+                                    <li style="margin-bottom: 10px;">
+                                        <strong>Payment Method:</strong> 
+                                        <span th:text="${order.paymentMethod}"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="margin-bottom: 20px;"><i class="fa fa-truck"></i> Shipping Address</h4>
+                                <address>
+                                    <span th:text="${order.shippingFirstName + ' ' + order.shippingLastName}"></span><br>
+                                    <span th:text="${order.shippingAddressLine1}"></span><br>
+                                    <span th:if="${order.shippingAddressLine2}" th:text="${order.shippingAddressLine2}"></span>
+                                    <br th:if="${order.shippingAddressLine2}">
+                                    <span th:text="${order.shippingCity + ', ' + order.shippingCountry}"></span>
+                                    <span th:if="${order.shippingZipCode}" th:text="' - ' + ${order.shippingZipCode}"></span>
+                                </address>
+                            </div>
+                        </div>
                     </div>
-                </form>
+
+                    <!-- Order Progress -->
+                    <div class="order_progress" style="margin-bottom: 30px;">
+                        <h4 style="margin-bottom: 20px;">Order Progress</h4>
+                        <div class="progress" style="height: 30px; border-radius: 15px;">
+                            <div class="progress-bar" role="progressbar" 
+                                 th:style="'width: ' + ${order.status.name() == 'PENDING' ? '25' : 
+                                                        order.status.name() == 'PROCESSING' ? '50' : 
+                                                        order.status.name() == 'SHIPPED' ? '75' : 
+                                                        order.status.name() == 'DELIVERED' ? '100' : '0'} + '%'"
+                                 th:classappend="${order.status.name() == 'CANCELLED' ? 'bg-danger' : 'bg-success'}"
+                                 th:text="${order.status}">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2" style="font-size: 12px; color: #666;">
+                            <span>Pending</span>
+                            <span>Processing</span>
+                            <span>Shipped</span>
+                            <span>Delivered</span>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div class="order_items">
+                        <h4 style="margin-bottom: 20px;">Order Items</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="item : ${order.orderItems}">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img th:src="${item.productImage}" alt="" 
+                                                     style="width: 50px; height: 50px; object-fit: cover; margin-right: 15px;">
+                                                <span th:text="${item.productName}"></span>
+                                            </div>
+                                        </td>
+                                        <td th:text="'$' + ${#numbers.formatDecimal(item.price, 1, 2)}"></td>
+                                        <td th:text="${item.quantity}"></td>
+                                        <td th:text="'$' + ${#numbers.formatDecimal(item.getTotal(), 1, 2)}"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-right"><strong>Subtotal:</strong></td>
+                                        <td th:text="'$' + ${#numbers.formatDecimal(order.subtotal, 1, 2)}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-right"><strong>Shipping:</strong></td>
+                                        <td th:text="'$' + ${#numbers.formatDecimal(order.shippingCost, 1, 2)}"></td>
+                                    </tr>
+                                    <tr th:if="${order.discount != null and order.discount > 0}">
+                                        <td colspan="3" class="text-right text-success">
+                                            <strong>Discount (<span th:text="${order.couponCode}"></span>):</strong>
+                                        </td>
+                                        <td class="text-success" th:text="'-$' + ${#numbers.formatDecimal(order.discount, 1, 2)}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-right"><h5><strong>Total:</strong></h5></td>
+                                        <td><h5><strong th:text="'$' + ${#numbers.formatDecimal(order.total, 1, 2)}"></strong></h5></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Track Another Order -->
+                    <div class="text-center mt-4">
+                        <a th:href="@{/tracking}" class="gray_btn">Track Another Order</a>
+                        <a th:href="@{/}" class="primary-btn" style="margin-left: 15px;">Continue Shopping</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

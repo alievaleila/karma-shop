@@ -11,5 +11,7 @@ public interface OrderService {
 
     Optional<Order> findByOrderNumber(String orderNumber);
 
+    Optional<Order> findByOrderNumberAndEmail(String orderNumber, String email);
+
     List<Order> getOrdersByUsername(String username);
 }

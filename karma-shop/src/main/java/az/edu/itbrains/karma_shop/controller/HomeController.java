@@ -74,15 +74,7 @@ public class HomeController {
         return "category";
     }
 
-    @GetMapping("/checkout")
-    public String checkout() {
-        return "checkout";
-    }
-
-    @GetMapping("/confirmation")
-    public String confirmation() {
-        return "confirmation";
-    }
+    // checkout və confirmation CheckoutController-ə köçürüldü
 
     @GetMapping("/contact")
     public String contact() {
@@ -112,8 +104,5 @@ public class HomeController {
         return "single-product";
     }
 
-    @GetMapping("/tracking")
-    public String tracking() {
-        return "tracking";
-    }
+    // tracking TrackingController-ə köçürüldü
 }

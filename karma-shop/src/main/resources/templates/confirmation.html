@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layout}">
 <head>
-    <title>Home</title>
+    <title>Order Confirmation</title>
 </head>
 
 <body>
@@ -12,10 +13,10 @@
         <div class="container">
             <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
                 <div class="col-first">
-                    <h1>Confirmation</h1>
+                    <h1>Order Confirmation</h1>
                     <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="category.html">Confirmation</a>
+                        <a th:href="@{/}">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a th:href="@{/confirmation}">Confirmation</a>
                     </nav>
                 </div>
             </div>
@@ -32,10 +33,13 @@
                     <div class="details_item">
                         <h4>Order Info</h4>
                         <ul class="list">
-                            <li><a href="#"><span>Order number</span> : 60235</a></li>
-                            <li><a href="#"><span>Date</span> : Los Angeles</a></li>
-                            <li><a href="#"><span>Total</span> : USD 2210</a></li>
-                            <li><a href="#"><span>Payment method</span> : Check payments</a></li>
+                            <li><a href="#"><span>Order number</span> : <span th:text="${order.orderNumber}">ORD-123456</span></a></li>
+                            <li><a href="#"><span>Date</span> : <span th:text="${#temporals.format(order.createdAt, 'dd MMM yyyy')}">01 Jan 2025</span></a></li>
+                            <li><a href="#"><span>Total</span> : USD <span th:text="${#numbers.formatDecimal(order.total, 1, 2)}">0.00</span></a></li>
+                            <li><a href="#"><span>Payment method</span> : 
+                                <span th:text="${order.paymentMethod == T(az.edu.itbrains.karma_shop.enums.PaymentMethod).CHECK_PAYMENTS ? 'Check payments' : 'PayPal'}">Check payments</span>
+                            </a></li>
+                            <li><a href="#"><span>Status</span> : <span th:text="${order.status}">PENDING</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -43,10 +47,11 @@
                     <div class="details_item">
                         <h4>Billing Address</h4>
                         <ul class="list">
-                            <li><a href="#"><span>Street</span> : 56/8</a></li>
-                            <li><a href="#"><span>City</span> : Los Angeles</a></li>
-                            <li><a href="#"><span>Country</span> : United States</a></li>
-                            <li><a href="#"><span>Postcode </span> : 36952</a></li>
+                            <li><a href="#"><span>Name</span> : <span th:text="${order.firstName + ' ' + order.lastName}">John Doe</span></a></li>
+                            <li><a href="#"><span>Address</span> : <span th:text="${order.addressLine1}">Address</span></a></li>
+                            <li><a href="#"><span>City</span> : <span th:text="${order.city}">City</span></a></li>
+                            <li><a href="#"><span>Country</span> : <span th:text="${order.country}">Country</span></a></li>
+                            <li th:if="${order.zipCode != null}"><a href="#"><span>Postcode</span> : <span th:text="${order.zipCode}">12345</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,10 +59,11 @@
                     <div class="details_item">
                         <h4>Shipping Address</h4>
                         <ul class="list">
-                            <li><a href="#"><span>Street</span> : 56/8</a></li>
-                            <li><a href="#"><span>City</span> : Los Angeles</a></li>
-                            <li><a href="#"><span>Country</span> : United States</a></li>
-                            <li><a href="#"><span>Postcode </span> : 36952</a></li>
+                            <li><a href="#"><span>Name</span> : <span th:text="${order.shippingFirstName + ' ' + order.shippingLastName}">John Doe</span></a></li>
+                            <li><a href="#"><span>Address</span> : <span th:text="${order.shippingAddressLine1}">Address</span></a></li>
+                            <li><a href="#"><span>City</span> : <span th:text="${order.shippingCity}">City</span></a></li>
+                            <li><a href="#"><span>Country</span> : <span th:text="${order.shippingCountry}">Country</span></a></li>
+                            <li th:if="${order.shippingZipCode != null}"><a href="#"><span>Postcode</span> : <span th:text="${order.shippingZipCode}">12345</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -74,37 +80,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="item : ${order.orderItems}">
                             <td>
-                                <p>Pixelstore fresh Blackberry</p>
+                                <p th:text="${item.productName}">Product Name</p>
                             </td>
                             <td>
-                                <h5>x 02</h5>
+                                <h5 th:text="'x ' + ${item.quantity}">x 1</h5>
                             </td>
                             <td>
-                                <p>$720.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>Pixelstore fresh Blackberry</p>
-                            </td>
-                            <td>
-                                <h5>x 02</h5>
-                            </td>
-                            <td>
-                                <p>$720.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>Pixelstore fresh Blackberry</p>
-                            </td>
-                            <td>
-                                <h5>x 02</h5>
-                            </td>
-                            <td>
-                                <p>$720.00</p>
+                                <p th:text="'$' + ${#numbers.formatDecimal(item.getTotal(), 1, 2)}">$0.00</p>
                             </td>
                         </tr>
                         <tr>
@@ -115,7 +99,7 @@
                                 <h5></h5>
                             </td>
                             <td>
-                                <p>$2160.00</p>
+                                <p th:text="'$' + ${#numbers.formatDecimal(order.subtotal, 1, 2)}">$0.00</p>
                             </td>
                         </tr>
                         <tr>
@@ -126,23 +110,39 @@
                                 <h5></h5>
                             </td>
                             <td>
-                                <p>Flat rate: $50.00</p>
+                                <p th:text="'Flat rate: $' + ${#numbers.formatDecimal(order.shippingCost, 1, 2)}">Flat rate: $5.00</p>
                             </td>
                         </tr>
-                        <tr>
+                        <tr th:if="${order.couponCode != null}">
                             <td>
-                                <h4>Total</h4>
+                                <h4 class="text-success">Discount (<span th:text="${order.couponCode}"></span>)</h4>
                             </td>
                             <td>
                                 <h5></h5>
                             </td>
                             <td>
-                                <p>$2210.00</p>
+                                <p class="text-success" th:text="'-$' + ${#numbers.formatDecimal(order.discount, 1, 2)}">-$0.00</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4><strong>Total</strong></h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p><strong th:text="'$' + ${#numbers.formatDecimal(order.total, 1, 2)}">$0.00</strong></p>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
+            
+            <!-- Continue Shopping Button -->
+            <div class="text-center mt-4">
+                <a th:href="@{/}" class="primary-btn">Continue Shopping</a>
             </div>
         </div>
     </section>
