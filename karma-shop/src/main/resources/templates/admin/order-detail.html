@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Sifariş Detalları - Admin Panel</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Sifariş: <span th:text="${order.orderNumber}">ORD-12345678</span></h4>
+        <a th:href="@{/admin/orders}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Geri
+        </a>
+    </div>
+
+    <div class="row">
+        <!-- Order Info -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Sifariş Məhsulları</span>
+                    <span class="badge badge-status"
+                          th:classappend="${order.status.name() == 'PENDING'} ? 'bg-warning' : 
+                                         (${order.status.name() == 'CONFIRMED'} ? 'bg-info' : 
+                                         (${order.status.name() == 'SHIPPED'} ? 'bg-primary' : 
+                                         (${order.status.name() == 'DELIVERED'} ? 'bg-success' : 'bg-secondary')))"
+                          th:text="${order.status}">PENDING</span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Məhsul</th>
+                                    <th>Qiymət</th>
+                                    <th>Say</th>
+                                    <th>Cəm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${order.orderItems}">
+                                    <td class="d-flex align-items-center">
+                                        <img th:src="${item.productImageUrl}" 
+                                             alt="Product" 
+                                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
+                                        <span th:text="${item.productName}">Product Name</span>
+                                    </td>
+                                    <td th:text="${#numbers.formatDecimal(item.price, 1, 2)} + ' ₼'">100.00 ₼</td>
+                                    <td th:text="${item.quantity}">1</td>
+                                    <td th:text="${#numbers.formatDecimal(item.price * item.quantity, 1, 2)} + ' ₼'">100.00 ₼</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>Ara Cəm:</strong></td>
+                                    <td th:text="${#numbers.formatDecimal(order.subtotal, 1, 2)} + ' ₼'">100.00 ₼</td>
+                                </tr>
+                                <tr th:if="${order.discount != null && order.discount > 0}">
+                                    <td colspan="3" class="text-end"><strong>Endirim:</strong></td>
+                                    <td class="text-danger" th:text="'-' + ${#numbers.formatDecimal(order.discount, 1, 2)} + ' ₼'">-10.00 ₼</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>Çatdırılma:</strong></td>
+                                    <td th:text="${#numbers.formatDecimal(order.shippingCost, 1, 2)} + ' ₼'">5.00 ₼</td>
+                                </tr>
+                                <tr class="table-primary">
+                                    <td colspan="3" class="text-end"><strong>Ümumi:</strong></td>
+                                    <td><strong th:text="${#numbers.formatDecimal(order.total, 1, 2)} + ' ₼'">95.00 ₼</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Update -->
+            <div class="card mb-4">
+                <div class="card-header">Status Dəyişdir</div>
+                <div class="card-body">
+                    <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post" class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <select name="status" class="form-select">
+                                <option th:each="status : ${T(az.edu.itbrains.karma_shop.enums.OrderStatus).values()}"
+                                        th:value="${status.name()}"
+                                        th:selected="${order.status == status}"
+                                        th:text="${status}">Status</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Yenilə</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Info -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">Müştəri Məlumatları</div>
+                <div class="card-body">
+                    <p><strong>Ad:</strong> <span th:text="${order.firstName + ' ' + order.lastName}">John Doe</span></p>
+                    <p><strong>Email:</strong> <span th:text="${order.email}">john@example.com</span></p>
+                    <p><strong>Telefon:</strong> <span th:text="${order.phone}">+994 XX XXX XX XX</span></p>
+                    <p th:if="${order.company}"><strong>Şirkət:</strong> <span th:text="${order.company}">Company</span></p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">Faktura Ünvanı</div>
+                <div class="card-body">
+                    <p th:text="${order.addressLine1}">Address Line 1</p>
+                    <p th:if="${order.addressLine2}" th:text="${order.addressLine2}">Address Line 2</p>
+                    <p th:text="${order.city + ', ' + order.district}">City, District</p>
+                    <p th:text="${order.country + ' ' + order.zipCode}">Country Zip</p>
+                </div>
+            </div>
+
+            <div class="card mb-4" th:if="${order.shipToDifferentAddress}">
+                <div class="card-header">Çatdırılma Ünvanı</div>
+                <div class="card-body">
+                    <p><strong th:text="${order.shippingFirstName + ' ' + order.shippingLastName}">Name</strong></p>
+                    <p th:text="${order.shippingAddressLine1}">Address Line 1</p>
+                    <p th:if="${order.shippingAddressLine2}" th:text="${order.shippingAddressLine2}">Address Line 2</p>
+                    <p th:text="${order.shippingCity + ', ' + order.shippingDistrict}">City, District</p>
+                    <p th:text="${order.shippingCountry + ' ' + order.shippingZipCode}">Country Zip</p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">Sifariş Məlumatları</div>
+                <div class="card-body">
+                    <p><strong>Sifariş Tarixi:</strong> <span th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2024</span></p>
+                    <p><strong>Ödəniş Metodu:</strong> <span th:text="${order.paymentMethod}">Cash</span></p>
+                    <p th:if="${order.couponCode}"><strong>Kupon Kodu:</strong> <span th:text="${order.couponCode}">DISCOUNT10</span></p>
+                    <p th:if="${order.orderNotes}"><strong>Qeydlər:</strong><br><span th:text="${order.orderNotes}">Notes...</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

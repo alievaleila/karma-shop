@@ -176,6 +176,11 @@ public class CheckoutController {
         return "redirect:/confirmation/" + savedOrder.getOrderNumber();
     }
 
+    @GetMapping("/confirmation")
+    public String confirmationRedirect() {
+        return "redirect:/";
+    }
+
     @GetMapping("/confirmation/{orderNumber}")
     public String confirmation(
             @org.springframework.web.bind.annotation.PathVariable String orderNumber,

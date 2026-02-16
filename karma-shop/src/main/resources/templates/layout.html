@@ -1,11 +1,15 @@
 <!-- layout.html - SADƏCƏ POPPER.JS DÜZƏLDILDI -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- CSRF Token -->
+    <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}" />
     <!-- Favicon-->
     <link rel="shortcut icon" href="/front/img/fav.png">
     <!-- Author Meta -->
@@ -79,6 +83,7 @@
                                 <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/tracking">Tracking</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/elements">Elements</a></li>
+                                <li class="nav-item" sec:authorize="hasRole('ADMIN')"><a class="nav-link" href="/admin">Admin Panel</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Mesajlar - Admin Panel</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Mesajlar</h4>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover datatable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ad</th>
+                            <th>Email</th>
+                            <th>Mövzu</th>
+                            <th>Tarix</th>
+                            <th>Əməliyyatlar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="contact : ${contacts}">
+                            <td th:text="${contact.id}">1</td>
+                            <td th:text="${contact.name}">John Doe</td>
+                            <td th:text="${contact.email}">john@example.com</td>
+                            <td th:text="${contact.subject}">Subject</td>
+                            <td th:text="${#temporals.format(contact.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2024</td>
+                            <td>
+                                <button type="button" 
+                                        class="btn btn-sm btn-outline-primary btn-action"
+                                        data-bs-toggle="modal" 
+                                        th:data-bs-target="'#viewModal' + ${contact.id}">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button type="button" 
+                                        class="btn btn-sm btn-outline-danger btn-action"
+                                        data-bs-toggle="modal" 
+                                        th:data-bs-target="'#deleteModal' + ${contact.id}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                
+                                <!-- View Modal -->
+                                <div class="modal fade" th:id="'viewModal' + ${contact.id}" tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" th:text="${contact.subject}">Subject</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><strong>Göndərən:</strong> <span th:text="${contact.name}">Name</span></p>
+                                                <p><strong>Email:</strong> <span th:text="${contact.email}">email@example.com</span></p>
+                                                <p><strong>Tarix:</strong> <span th:text="${#temporals.format(contact.createdAt, 'dd.MM.yyyy HH:mm')}">Date</span></p>
+                                                <hr>
+                                                <p th:text="${contact.message}">Message content...</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a th:href="'mailto:' + ${contact.email}" class="btn btn-primary">
+                                                    <i class="bi bi-envelope me-2"></i>Cavab Ver
+                                                </a>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bağla</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Delete Modal -->
+                                <div class="modal fade" th:id="'deleteModal' + ${contact.id}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Silmək İstədiyinizdən Əminsiniz?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Bu mesajı silmək istəyirsiniz?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ləğv Et</button>
+                                                <form th:action="@{/admin/contacts/delete/{id}(id=${contact.id})}" method="post" style="display: inline;">
+                                                    <button type="submit" class="btn btn-danger">Sil</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

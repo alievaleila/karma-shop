@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Dashboard - Admin Panel</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="stats-card bg-primary">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 th:text="${totalProducts}">0</h3>
+                        <p>Məhsullar</p>
+                    </div>
+                    <i class="bi bi-box-seam icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card bg-success">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 th:text="${totalOrders}">0</h3>
+                        <p>Sifarişlər</p>
+                    </div>
+                    <i class="bi bi-cart-check icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card bg-warning">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 th:text="${totalUsers}">0</h3>
+                        <p>İstifadəçilər</p>
+                    </div>
+                    <i class="bi bi-people icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card bg-danger">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 th:text="${totalCategories}">0</h3>
+                        <p>Kateqoriyalar</p>
+                    </div>
+                    <i class="bi bi-tags icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Orders -->
+        <div class="col-md-8 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Son Sifarişlər</span>
+                    <a th:href="@{/admin/orders}" class="btn btn-sm btn-outline-primary">Hamısına Bax</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sifariş №</th>
+                                    <th>Müştəri</th>
+                                    <th>Məbləğ</th>
+                                    <th>Status</th>
+                                    <th>Tarix</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="order : ${recentOrders}">
+                                    <td th:text="${order.orderNumber}">ORD-12345678</td>
+                                    <td th:text="${order.firstName + ' ' + order.lastName}">John Doe</td>
+                                    <td th:text="${#numbers.formatDecimal(order.total, 1, 2)} + ' ₼'">100.00 ₼</td>
+                                    <td>
+                                        <span class="badge badge-status"
+                                              th:classappend="${order.status.name() == 'PENDING'} ? 'bg-warning' : 
+                                                             (${order.status.name() == 'CONFIRMED'} ? 'bg-info' : 
+                                                             (${order.status.name() == 'SHIPPED'} ? 'bg-primary' : 
+                                                             (${order.status.name() == 'DELIVERED'} ? 'bg-success' : 'bg-secondary')))"
+                                              th:text="${order.status}">PENDING</span>
+                                    </td>
+                                    <td th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2024</td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(recentOrders)}">
+                                    <td colspan="5" class="text-center text-muted">Sifariş tapılmadı</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">Sürətli Əməliyyatlar</div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a th:href="@{/admin/products/add}" class="btn btn-outline-primary">
+                            <i class="bi bi-plus-circle me-2"></i>Yeni Məhsul Əlavə Et
+                        </a>
+                        <a th:href="@{/admin/categories/add}" class="btn btn-outline-success">
+                            <i class="bi bi-plus-circle me-2"></i>Yeni Kateqoriya Əlavə Et
+                        </a>
+                        <a th:href="@{/admin/coupons/add}" class="btn btn-outline-warning">
+                            <i class="bi bi-plus-circle me-2"></i>Yeni Kupon Yarat
+                        </a>
+                        <a th:href="@{/admin/orders}" class="btn btn-outline-info">
+                            <i class="bi bi-eye me-2"></i>Sifarişlərə Bax
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">Son Mesajlar</div>
+                <div class="card-body">
+                    <div th:each="contact : ${recentContacts}" class="mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between">
+                            <strong th:text="${contact.name}">İstifadəçi</strong>
+                            <small class="text-muted" th:text="${#temporals.format(contact.createdAt, 'dd.MM.yyyy')}">01.01.2024</small>
+                        </div>
+                        <p class="mb-0 text-muted small" th:text="${#strings.abbreviate(contact.message, 50)}">Mesaj mətni...</p>
+                    </div>
+                    <div th:if="${#lists.isEmpty(recentContacts)}" class="text-center text-muted">
+                        Mesaj yoxdur
+                    </div>
+                    <a th:href="@{/admin/contacts}" class="btn btn-sm btn-outline-secondary w-100">Hamısına Bax</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

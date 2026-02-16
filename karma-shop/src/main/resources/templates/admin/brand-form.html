@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Brend Əlavə Et - Admin Panel</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0" th:text="${brand.id != null} ? 'Brendi Redaktə Et' : 'Yeni Brend Əlavə Et'">Yeni Brend</h4>
+        <a th:href="@{/admin/brands}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Geri
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form th:action="${brand.id != null} ? @{/admin/brands/edit/{id}(id=${brand.id})} : @{/admin/brands/add}" 
+                  method="post" 
+                  th:object="${brand}">
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Brend Adı *</label>
+                        <input type="text" class="form-control" th:field="*{name}" required>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle me-2"></i>
+                        <span th:text="${brand.id != null} ? 'Yenilə' : 'Əlavə Et'">Əlavə Et</span>
+                    </button>
+                    <a th:href="@{/admin/brands}" class="btn btn-outline-secondary">Ləğv Et</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

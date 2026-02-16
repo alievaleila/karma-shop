@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Sifarişlər - Admin Panel</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Sifarişlər</h4>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover datatable">
+                    <thead>
+                        <tr>
+                            <th>Sifariş №</th>
+                            <th>Müştəri</th>
+                            <th>Email</th>
+                            <th>Telefon</th>
+                            <th>Məbləğ</th>
+                            <th>Status</th>
+                            <th>Tarix</th>
+                            <th>Əməliyyatlar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td>
+                                <a th:href="@{/admin/orders/{id}(id=${order.id})}" class="text-decoration-none">
+                                    <strong th:text="${order.orderNumber}">ORD-12345678</strong>
+                                </a>
+                            </td>
+                            <td th:text="${order.firstName + ' ' + order.lastName}">John Doe</td>
+                            <td th:text="${order.email}">john@example.com</td>
+                            <td th:text="${order.phone}">+994 XX XXX XX XX</td>
+                            <td th:text="${#numbers.formatDecimal(order.total, 1, 2)} + ' ₼'">100.00 ₼</td>
+                            <td>
+                                <span class="badge badge-status"
+                                      th:classappend="${order.status.name() == 'PENDING'} ? 'bg-warning' : 
+                                                     (${order.status.name() == 'CONFIRMED'} ? 'bg-info' : 
+                                                     (${order.status.name() == 'SHIPPED'} ? 'bg-primary' : 
+                                                     (${order.status.name() == 'DELIVERED'} ? 'bg-success' : 
+                                                     (${order.status.name() == 'CANCELLED'} ? 'bg-danger' : 'bg-secondary'))))"
+                                      th:text="${order.status}">PENDING</span>
+                            </td>
+                            <td th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2024</td>
+                            <td>
+                                <a th:href="@{/admin/orders/{id}(id=${order.id})}" 
+                                   class="btn btn-sm btn-outline-primary btn-action">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle btn-action" 
+                                            data-bs-toggle="dropdown">
+                                        Status
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li th:each="status : ${T(az.edu.itbrains.karma_shop.enums.OrderStatus).values()}">
+                                            <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post">
+                                                <input type="hidden" name="status" th:value="${status.name()}">
+                                                <button type="submit" class="dropdown-item" th:text="${status}">Status</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

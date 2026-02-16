@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Brendlər - Admin Panel</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Brendlər</h4>
+        <a th:href="@{/admin/brands/add}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Yeni Brend
+        </a>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover datatable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ad</th>
+                            <th>Əməliyyatlar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="brand : ${brands}">
+                            <td th:text="${brand.id}">1</td>
+                            <td th:text="${brand.name}">Brand Name</td>
+                            <td>
+                                <a th:href="@{/admin/brands/edit/{id}(id=${brand.id})}" 
+                                   class="btn btn-sm btn-outline-primary btn-action">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" 
+                                        class="btn btn-sm btn-outline-danger btn-action"
+                                        data-bs-toggle="modal" 
+                                        th:data-bs-target="'#deleteModal' + ${brand.id}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                
+                                <!-- Delete Modal -->
+                                <div class="modal fade" th:id="'deleteModal' + ${brand.id}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Silmək İstədiyinizdən Əminsiniz?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Bu brendi silmək istəyirsiniz: <strong th:text="${brand.name}">Brand</strong>?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ləğv Et</button>
+                                                <form th:action="@{/admin/brands/delete/{id}(id=${brand.id})}" method="post" style="display: inline;">
+                                                    <button type="submit" class="btn btn-danger">Sil</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

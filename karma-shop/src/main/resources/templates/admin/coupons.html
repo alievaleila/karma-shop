@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Kuponlar - Admin Panel</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Kuponlar</h4>
+        <a th:href="@{/admin/coupons/add}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Yeni Kupon
+        </a>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover datatable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Kod</th>
+                            <th>Endirim (%)</th>
+                            <th>Min. Məbləğ</th>
+                            <th>Bitmə Tarixi</th>
+                            <th>Status</th>
+                            <th>Əməliyyatlar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="coupon : ${coupons}">
+                            <td th:text="${coupon.id}">1</td>
+                            <td><code th:text="${coupon.code}">DISCOUNT10</code></td>
+                            <td th:text="${coupon.discountPercent} + '%'">10%</td>
+                            <td th:text="${coupon.minOrderAmount != null} ? ${#numbers.formatDecimal(coupon.minOrderAmount, 1, 2)} + ' ₼' : '-'">50.00 ₼</td>
+                            <td th:text="${coupon.expiryDate != null} ? ${#temporals.format(coupon.expiryDate, 'dd.MM.yyyy')} : 'Limitsiz'">01.01.2025</td>
+                            <td>
+                                <span th:if="${coupon.active}" class="badge bg-success">Aktiv</span>
+                                <span th:unless="${coupon.active}" class="badge bg-secondary">Deaktiv</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/admin/coupons/edit/{id}(id=${coupon.id})}" 
+                                   class="btn btn-sm btn-outline-primary btn-action">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" 
+                                        class="btn btn-sm btn-outline-danger btn-action"
+                                        data-bs-toggle="modal" 
+                                        th:data-bs-target="'#deleteModal' + ${coupon.id}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                
+                                <!-- Delete Modal -->
+                                <div class="modal fade" th:id="'deleteModal' + ${coupon.id}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Silmək İstədiyinizdən Əminsiniz?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Bu kuponu silmək istəyirsiniz: <strong th:text="${coupon.code}">Coupon</strong>?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ləğv Et</button>
+                                                <form th:action="@{/admin/coupons/delete/{id}(id=${coupon.id})}" method="post" style="display: inline;">
+                                                    <button type="submit" class="btn btn-danger">Sil</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

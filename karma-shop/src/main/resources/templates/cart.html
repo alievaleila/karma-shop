@@ -38,7 +38,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="cartItem : ${cartItems}" th:data-product-id="${cartItem.id}">
+                        <tr th:each="cartItem : ${cartItems}" th:data-product-id="${cartItem.product.id}">
                             <td>
                                 <div class="media">
                                     <div class="d-flex">
@@ -240,34 +240,35 @@ function updateItemTotal(element) {
 
 // Remove item from cart
 function removeFromCart(button) {
-    if (confirm('Bu ürünü sepetten çıkarmak istediğinize emin misiniz?')) {
+    if (confirm('Bu məhsulu səbətdən silmək istədiyinizə əminsiniz?')) {
         const row = button.closest('tr');
         const productId = row.getAttribute('data-product-id');
+        
+        const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content') || '';
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content') || 'X-CSRF-TOKEN';
         
         // Send delete request to backend
         fetch('/cart/remove/' + productId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]')?.getAttribute('content') || ''
+                [csrfHeader]: csrfToken
             }
         })
         .then(response => {
-            if (response.ok) {
+            if (response.ok || response.redirected) {
                 row.style.opacity = '0.5';
                 setTimeout(() => {
                     row.remove();
                     updateSubtotal();
                 }, 300);
             } else {
-                alert('Hata: Ürün silinirken hata oluştu');
+                alert('Xəta: Məhsul silinərkən xəta baş verdi');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            // Still remove from UI even if backend call fails
-            row.remove();
-            updateSubtotal();
+            alert('Xəta: Məhsul silinərkən xəta baş verdi');
         });
     }
 }

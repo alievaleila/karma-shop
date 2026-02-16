@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Kateqoriyalar - Admin Panel</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Kateqoriyalar</h4>
+        <a th:href="@{/admin/categories/add}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Yeni Kateqoriya
+        </a>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover datatable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ad</th>
+                            <th>Ana Kateqoriya</th>
+                            <th>Məhsul Sayı</th>
+                            <th>Əməliyyatlar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="category : ${categories}">
+                            <td th:text="${category.id}">1</td>
+                            <td th:text="${category.name}">Category Name</td>
+                            <td>
+                                <span th:if="${category.parentName != null}" th:text="${category.parentName}">Parent</span>
+                                <span th:unless="${category.parentName != null}" class="text-muted">-</span>
+                            </td>
+                            <td th:text="${category.productCount}">0</td>
+                            <td>
+                                <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}" 
+                                   class="btn btn-sm btn-outline-primary btn-action">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" 
+                                        class="btn btn-sm btn-outline-danger btn-action"
+                                        data-bs-toggle="modal" 
+                                        th:data-bs-target="'#deleteModal' + ${category.id}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                
+                                <!-- Delete Modal -->
+                                <div class="modal fade" th:id="'deleteModal' + ${category.id}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Silmək İstədiyinizdən Əminsiniz?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Bu kateqoriyanı silmək istəyirsiniz: <strong th:text="${category.name}">Category</strong>?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ləğv Et</button>
+                                                <form th:action="@{/admin/categories/delete/{id}(id=${category.id})}" method="post" style="display: inline;">
+                                                    <button type="submit" class="btn btn-danger">Sil</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
