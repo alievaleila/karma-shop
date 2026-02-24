@@ -12,5 +12,4 @@ import lombok.Setter;
 public class CategoryFormDto {
     private Long id;
     private String name;
-    private Long parentId;
 }

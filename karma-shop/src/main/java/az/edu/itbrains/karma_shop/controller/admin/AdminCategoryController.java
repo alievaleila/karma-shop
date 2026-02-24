@@ -41,9 +41,7 @@ public class AdminCategoryController {
     public String addCategoryForm(Model model) {
         model.addAttribute("currentPage", "categories");
         model.addAttribute("pageTitle", "Yeni Kateqoriya");
-        model.addAttribute("category", new CategoryFormDto());
-        model.addAttribute("categories", categoryRepository.findAll());
-        return "admin/category-form";
+        model.addAttribute("category", new CategoryFormDto());    return "admin/category-form";
     }
 
     @PostMapping("/add")
@@ -63,7 +61,6 @@ public class AdminCategoryController {
         model.addAttribute("currentPage", "categories");
         model.addAttribute("pageTitle", "Kateqoriyanı Redaktə Et");
         model.addAttribute("category", toFormDto(category));
-        model.addAttribute("categories", categoryRepository.findAll());
         return "admin/category-form";
     }
 
@@ -89,9 +86,6 @@ public class AdminCategoryController {
         CategoryListDto dto = new CategoryListDto();
         dto.setId(category.getId());
         dto.setName(category.getName());
-        if (category.getParent() != null) {
-            dto.setParentName(category.getParent().getName());
-        }
         dto.setProductCount(category.getProducts() != null ? category.getProducts().size() : 0);
         return dto;
     }
@@ -100,19 +94,10 @@ public class AdminCategoryController {
         CategoryFormDto dto = new CategoryFormDto();
         dto.setId(category.getId());
         dto.setName(category.getName());
-        if (category.getParent() != null) {
-            dto.setParentId(category.getParent().getId());
-        }
         return dto;
     }
 
     private void mapFormToCategory(CategoryFormDto form, Category category) {
         category.setName(form.getName());
-        if (form.getParentId() != null) {
-            Category parent = categoryRepository.findById(form.getParentId()).orElse(null);
-            category.setParent(parent);
-        } else {
-            category.setParent(null);
-        }
     }
 }

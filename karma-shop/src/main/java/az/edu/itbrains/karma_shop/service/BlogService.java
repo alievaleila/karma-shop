@@ -7,4 +7,6 @@ import java.util.List;
 public interface BlogService {
 
     List<BlogDto> getAllBlogs();
+
+    BlogDto getById(Long id);
 }

@@ -8,6 +8,8 @@ public interface ProductService {
 
     List<ProductDto> getAllProducts();
 
+    List<ProductDto> getLatestProducts();
+
     List<ProductDto> getProductsByCategoryId(Long categoryId);
 
     ProductDto getById(Long id);

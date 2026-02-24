@@ -53,10 +53,7 @@
                                     <label for="lastName">Last Name *</label>
                                     <input type="text" class="form-control" id="lastName" name="lastName" required>
                                 </div>
-                                <div class="col-md-12 form-group">
-                                    <label for="company">Company Name</label>
-                                    <input type="text" class="form-control" id="company" name="company" placeholder="Company name">
-                                </div>
+                                
                                 <div class="col-md-6 form-group p_star">
                                     <label for="phone">Phone Number *</label>
                                     <input type="text" class="form-control" id="phone" name="phone" required>
@@ -65,9 +62,10 @@
                                     <label for="email">Email Address *</label>
                                     <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
-                                <div class="col-md-12 form-group p_star">
+                        
+                                <div class="col-md-6 form-group p_star">
                                     <label for="country">Country *</label>
-                                    <select class="form-control country_select" id="country" name="country" required>
+                                    <select class="form-control" id="country" name="country" required>
                                         <option value="">Select Country</option>
                                         <option value="Azerbaijan">Azerbaijan</option>
                                         <option value="Turkey">Turkey</option>
@@ -77,28 +75,36 @@
                                         <option value="Russia">Russia</option>
                                     </select>
                                 </div>
+                                <div class="col-md-6 form-group p_star">
+                                    <label for="company">Company (optional)</label>
+                                    <input type="text" class="form-control" id="company" name="company">
+                                </div>
+
                                 <div class="col-md-12 form-group p_star">
                                     <label for="addressLine1">Address Line 1 *</label>
                                     <input type="text" class="form-control" id="addressLine1" name="addressLine1" required>
                                 </div>
+
                                 <div class="col-md-12 form-group">
-                                    <label for="addressLine2">Address Line 2</label>
+                                    <label for="addressLine2">Address Line 2 (optional)</label>
                                     <input type="text" class="form-control" id="addressLine2" name="addressLine2">
                                 </div>
+
                                 <div class="col-md-6 form-group p_star">
                                     <label for="city">City *</label>
                                     <input type="text" class="form-control" id="city" name="city" required>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="district">District</label>
+                                    <label for="district">District (optional)</label>
                                     <input type="text" class="form-control" id="district" name="district">
                                 </div>
+
                                 <div class="col-md-12 form-group">
-                                    <label for="zipCode">Postcode/ZIP</label>
-                                    <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Postcode/ZIP">
+                                    <label for="zipCode">Postcode/ZIP (optional)</label>
+                                    <input type="text" class="form-control" id="zipCode" name="zipCode">
                                 </div>
 
-                                <!-- Ship to different address -->
+                             <!-- Ship to different address -->
                                 <div class="col-md-12 form-group">
                                     <div class="creat_account">
                                         <h3>Shipping Details</h3>

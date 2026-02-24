@@ -24,4 +24,11 @@ public class BlogServiceImpl implements BlogService {
                 .map(b->modelMapper.map(b,BlogDto.class)).collect(Collectors.toList());
         return blogDtoList;
     }
+
+    @Override
+    public BlogDto getById(Long id) {
+        return blogRepository.findById(id)
+                .map(b -> modelMapper.map(b, BlogDto.class))
+                .orElseThrow(() -> new RuntimeException("Blog not found with id: " + id));
+    }
 }

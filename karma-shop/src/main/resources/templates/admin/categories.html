@@ -32,7 +32,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Ad</th>
-                            <th>Ana Kateqoriya</th>
                             <th>Məhsul Sayı</th>
                             <th>Əməliyyatlar</th>
                         </tr>
@@ -41,10 +40,6 @@
                         <tr th:each="category : ${categories}">
                             <td th:text="${category.id}">1</td>
                             <td th:text="${category.name}">Category Name</td>
-                            <td>
-                                <span th:if="${category.parentName != null}" th:text="${category.parentName}">Parent</span>
-                                <span th:unless="${category.parentName != null}" class="text-muted">-</span>
-                            </td>
                             <td th:text="${category.productCount}">0</td>
                             <td>
                                 <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}" 

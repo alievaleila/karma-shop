@@ -98,7 +98,7 @@
                             </div>
                             <div class="col-md-9">
                                 <div class="blog_post">
-                                    <img th:src="@{${blog.imageUrl}}" alt="">
+                                    <img th:src="${blog.imageUrl}" alt="">
                                     <div class="blog_details">
                                         <a th:href="@{/single-blog/{id}(id=${blog.id})}">
                                             <h2 th:text="${blog.title}">Blog Post Title</h2>

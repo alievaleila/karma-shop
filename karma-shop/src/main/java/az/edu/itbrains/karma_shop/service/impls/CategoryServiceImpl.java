@@ -19,9 +19,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> getAllCategories() {
-        List<CategoryDto> mainCategories = categoryRepository.findAllByParentIsNull()
+        return categoryRepository.findAll()
                 .stream()
-                .map(category -> modelMapper.map(category, CategoryDto.class)).collect(Collectors.toList());
-        return mainCategories;
+                .map(category -> modelMapper.map(category, CategoryDto.class))
+                .collect(Collectors.toList());
     }
 }

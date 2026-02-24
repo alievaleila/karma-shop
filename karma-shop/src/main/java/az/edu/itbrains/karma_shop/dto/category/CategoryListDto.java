@@ -12,6 +12,5 @@ import lombok.Setter;
 public class CategoryListDto {
     private Long id;
     private String name;
-    private String parentName;
     private Integer productCount;
 }

@@ -37,7 +37,7 @@
                             <li><a href="#"><span>Date</span> : <span th:text="${#temporals.format(order.createdAt, 'dd MMM yyyy')}">01 Jan 2025</span></a></li>
                             <li><a href="#"><span>Total</span> : USD <span th:text="${#numbers.formatDecimal(order.total, 1, 2)}">0.00</span></a></li>
                             <li><a href="#"><span>Payment method</span> : 
-                                <span th:text="${order.paymentMethod == T(az.edu.itbrains.karma_shop.enums.PaymentMethod).CHECK_PAYMENTS ? 'Check payments' : 'PayPal'}">Check payments</span>
+                                <span th:text="${order.paymentMethod.toString() == 'CHECK_PAYMENTS' ? 'Check payments' : 'PayPal'}">Check payments</span>
                             </a></li>
                             <li><a href="#"><span>Status</span> : <span th:text="${order.status}">PENDING</span></a></li>
                         </ul>

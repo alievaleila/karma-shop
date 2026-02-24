@@ -8,6 +8,7 @@ import az.edu.itbrains.karma_shop.model.User;
 import az.edu.itbrains.karma_shop.repository.UserRepository;
 import az.edu.itbrains.karma_shop.service.CartService;
 import az.edu.itbrains.karma_shop.service.OrderService;
+import az.edu.itbrains.karma_shop.service.TelegramService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class CheckoutController {
     private final CartService cartService;
     private final OrderService orderService;
     private final UserRepository userRepository;
+    private final TelegramService telegramService;
 
     private static final Double SHIPPING_COST = 5.00;
 
@@ -167,6 +169,8 @@ public class CheckoutController {
 
         Order savedOrder = orderService.createOrder(order);
 
+        // Send Telegram notification
+        telegramService.sendOrderNotification(savedOrder);
 
         cartService.clearCart(username);
 

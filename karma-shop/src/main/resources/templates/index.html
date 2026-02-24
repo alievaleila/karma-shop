@@ -124,66 +124,24 @@
     <!-- end features Area -->
 
     <!-- Start category Area -->
-    <section class="category-area">
+    <section class="category-area section_gap">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-8 col-md-12">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-8">
-                            <div class="single-deal">
-                                <div class="overlay"></div>
-                                <img class="img-fluid w-100" src="/front/img/category/c1.jpg" alt="">
-                                <a href="/front/img/category/c1.jpg" class="img-pop-up" target="_blank">
-                                    <div class="deal-details">
-                                        <h6 class="deal-title">Sneaker for Sports</h6>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="single-deal">
-                                <div class="overlay"></div>
-                                <img class="img-fluid w-100" src="/front/img/category/c2.jpg" alt="">
-                                <a href="/front/img/category/c2.jpg" class="img-pop-up" target="_blank">
-                                    <div class="deal-details">
-                                        <h6 class="deal-title">Sneaker for Sports</h6>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="single-deal">
-                                <div class="overlay"></div>
-                                <img class="img-fluid w-100" src="/front/img/category/c3.jpg" alt="">
-                                <a href="/front/img/category/c3.jpg" class="img-pop-up" target="_blank">
-                                    <div class="deal-details">
-                                        <h6 class="deal-title">Product for Couple</h6>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-8 col-md-8">
-                            <div class="single-deal">
-                                <div class="overlay"></div>
-                                <img class="img-fluid w-100" src="/front/img/category/c4.jpg" alt="">
-                                <a href="/front/img/category/c4.jpg" class="img-pop-up" target="_blank">
-                                    <div class="deal-details">
-                                        <h6 class="deal-title">Sneaker for Sports</h6>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                <div class="col-lg-8 text-center">
+                    <div class="section-title">
+                        <h1>Browse Categories</h1>
+                        <p>Explore our wide range of categories and find exactly what you're looking for.</p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-deal">
-                        <div class="overlay"></div>
-                        <img class="img-fluid w-100" src="/front/img/category/c5.jpg" alt="">
-                        <a href="/front/img/category/c5.jpg" class="img-pop-up" target="_blank">
-                            <div class="deal-details">
-                                <h6 class="deal-title">Sneaker for Sports</h6>
-                            </div>
-                        </a>
+            </div>
+            <div class="row">
+                <div th:each="c : ${categories}" class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">
+                                <a th:href="@{/category(id=${c.id})}" th:text="${c.name}" class="text-dark">Category Name</a>
+                            </h5>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -192,105 +150,52 @@
     <!-- End category Area -->
 
     <!-- start product Area -->
-    <section class="owl-carousel active-product-area section_gap">
-        <!-- single product slide -->
-        <div class="single-product-slider">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="section-title">
-                            <h1>Latest Products</h1>
-                            <p>Explore our newest collection of premium sneakers. From high-performance running shoes to
-                                iconic street style, find the perfect pair for your journey.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- single product -->
-                    <div th:each="p:${products}" class="col-lg-3 col-md-6">
-                        <div class="single-product">
-                            <img class="img-fluid" th:src="@{${p.imageUrl}}" alt="">
-                            <div class="product-details">
-                                <h6 th:text="${p.name}">addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div th:text="${p.discountPrice}" class="price">
-                                    <h6>$150.00</h6>
-                                    <h6 th:text="${p.price}" class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-                                    <form th:action="@{/cart/add}" method="post" class="social-info-form">
-                                        <input type="hidden" name="productId" th:value="${p.id}" />
-                                        <button type="submit" class="social-info-btn">
-                                            <span class="ti-bag"></span>
-                                        </button>
-                                        <p class="hover-text">Add to bag</p>
-                                    </form>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">Compare</p>
-                                    </a>
-                                    <a th:href="@{/product/{id}(id=${p.id})}" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">View More</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+    <section class="section_gap">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="section-title">
+                        <h1>Latest Products</h1>
+                        <p>Explore our newest collection of premium sneakers. From high-performance running shoes to
+                            iconic street style, find the perfect pair for your journey.</p>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="single-product-slider">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="section-title">
-                            <h1>Coming Products</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et
-                                dolore
-                                magna aliqua.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- single product -->
-                    <div th:each="p: ${products}" class="col-lg-3 col-md-6">
-                        <div class="single-product">
-                            <img class="img-fluid" th:src="${p.imageUrl}" alt="">
-                            <div class="product-details">
-                                <h6 th:text="${p.name}">addidas New Hammer sole
-                                    for Sports person</h6>
-                                <div class="price">
-                                    <h6 th:text="${p.price}">$150.00</h6>
-                                    <h6 th:text="${p.discountPrice}" class="l-through">$210.00</h6>
-                                </div>
-                                <div class="prd-bottom">
-                                    <a href="" class="social-info">
+            <div class="row">
+                <!-- single product -->
+                <div th:each="p:${products}" class="col-lg-3 col-md-6">
+                    <div class="single-product">
+                        <img class="img-fluid" th:src="${p.imageUrl}" alt="">
+                        <div class="product-details">
+                            <h6 th:text="${p.name}">addidas New Hammer sole
+                                for Sports person</h6>
+                            <div class="price">
+                                <h6 th:text="${'$' + p.discountPrice}">$150.00</h6>
+                                <h6 th:text="${'$' + p.price}" class="l-through">$210.00</h6>
+                            </div>
+                            <div class="prd-bottom">
+                                <form th:action="@{/cart/add}" method="post" class="social-info-form">
+                                    <input type="hidden" name="productId" th:value="${p.id}" />
+                                    <button type="submit" class="social-info-btn">
                                         <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">Compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">View More</p>
-                                    </a>
-                                </div>
+                                    </button>
+                                    <p class="hover-text">Add to bag</p>
+                                </form>
+                                <a href="" class="social-info">
+                                    <span class="lnr lnr-heart"></span>
+                                    <p class="hover-text">Wishlist</p>
+                                </a>
+                                <a href="" class="social-info">
+                                    <span class="lnr lnr-sync"></span>
+                                    <p class="hover-text">Compare</p>
+                                </a>
+                                <a th:href="@{/product/{id}(id=${p.id})}" class="social-info">
+                                    <span class="lnr lnr-move"></span>
+                                    <p class="hover-text">View More</p>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <!-- single product -->
                 </div>
             </div>
         </div>
@@ -385,23 +290,5 @@
     <!-- End brand Area -->
 
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    $(document).ready(function(){
-        var owl = $('.active-banner-slider');
-        owl.owlCarousel({
-            items: 1,
-            loop: true,
-            margin: 0,
-            nav: false,
-            dots: false,
-            mouseDrag: true,
-            touchDrag: true,
-            pullDrag: true,
-            autoplay: true,
-            autoplayTimeout: 5000
-        });
-    });
-</script>
 </body>
 </html>

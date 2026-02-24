@@ -26,6 +26,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDto> getLatestProducts() {
+        return productRepository.findTop8ByOrderByIdDesc()
+                .stream()
+                .map(product -> modelMapper.map(product, ProductDto.class)).toList();
+    }
+
+    @Override
     public List<ProductDto> getProductsByCategoryId(Long categoryId) {
         return productRepository.findTop6ByCategoryIdOrderByIdDesc(categoryId)
                 .stream()

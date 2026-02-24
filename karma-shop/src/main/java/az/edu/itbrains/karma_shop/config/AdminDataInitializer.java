@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +22,7 @@ public class AdminDataInitializer implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         // ROLE_ADMIN yaratmaq (əgər yoxdursa)
         Role adminRole = roleRepository.findByName("ROLE_ADMIN")
@@ -38,7 +40,7 @@ public class AdminDataInitializer implements CommandLineRunner {
                     return roleRepository.save(role);
                 });
 
-        // Admin istifadəçisi yaratmaq (əgər yoxdursa)
+        // Admin istifadəçisi yaratmaq (əgər yoxdursa) və ya rollarını yeniləmək
         User existingAdmin = userRepository.findByUsername("admin@karmashop.az");
         if (existingAdmin == null) {
             User admin = new User();
@@ -52,6 +54,14 @@ public class AdminDataInitializer implements CommandLineRunner {
             
             userRepository.save(admin);
             System.out.println("Admin istifadəçisi yaradıldı: admin@karmashop.az / admin123");
+        } else {
+            // Mövcud admin istifadəçisinin rollarını həmişə yenilə
+            Set<Role> roles = new HashSet<>();
+            roles.add(adminRole);
+            roles.add(userRole);
+            existingAdmin.setRoles(roles);
+            userRepository.save(existingAdmin);
+            System.out.println("Admin istifadəçisinin rolları yeniləndi: " + existingAdmin.getRoles().size() + " rol");
         }
     }
 }

@@ -32,8 +32,15 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        List<ProductDto> productDtoList = productService.getAllProducts();
+        List<ProductDto> productDtoList = productService.getLatestProducts();
         model.addAttribute("products", productDtoList);
+
+        List<CategoryDto> categoryDtoList = categoryService.getAllCategories();
+        model.addAttribute("categories", categoryDtoList);
+
+        List<DealDto> dealDtoList = dealService.getAllDeals();
+        model.addAttribute("deals", dealDtoList);
+
         return "index";
     }
 
@@ -86,8 +93,10 @@ public class HomeController {
         return "elements";
     }
 
-    @GetMapping("/single-blog")
-    public String singleBlog() {
+    @GetMapping("/single-blog/{id}")
+    public String singleBlog(@PathVariable Long id, Model model) {
+        BlogDto blog = blogService.getById(id);
+        model.addAttribute("blog", blog);
         return "single-blog";
     }
 

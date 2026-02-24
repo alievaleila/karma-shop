@@ -12,6 +12,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAllByCategoryId(Long categoryId);
 
+    List<Product> findTop8ByOrderByIdDesc();
+
     List<Product> findTop6ByCategoryIdOrderByIdDesc(Long categoryId);
 
     @Query(value = """

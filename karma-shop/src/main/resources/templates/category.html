@@ -30,24 +30,10 @@
                     <div class="head">Browse Categories</div>
                     <ul class="main-categories">
                         <li th:each="c : ${categories}" class="main-nav-list">
-
-                            <a data-toggle="collapse" th:href="${'#cat' + c.id}" aria-expanded="false">
+                            <a th:href="@{/category(id=${c.id})}">
                                 <span class="lnr lnr-arrow-right"></span>
-
-                                <span th:text="${c.name}">Fruits and Vegetables</span>
-
-                                <span class="number">(9)</span>
+                                <span th:text="${c.name}">Category Name</span>
                             </a>
-
-                            <ul class="collapse" th:id="${'cat' + c.id}" data-toggle="collapse">
-                                <li th:each="sub : ${c.subCategories}" class="main-nav-list child">
-                                    <a th:href="@{/category(id=${sub.id})}">
-                                        <span th:text="${sub.name}">Frozen Fish</span>
-                                        <span class="number">(3)</span>
-                                    </a>
-                                </li>
-                            </ul>
-
                         </li>
                     </ul>
                 </div>
@@ -117,39 +103,6 @@
                         </form>
                     </div>
 
-                    <div class="common-filter">
-                        <div class="head">Price</div>
-
-                        <form th:action="@{/category}" method="get" id="priceForm">
-                            <!-- category seçilibsə itirməsin -->
-                            <input type="hidden" name="id" th:value="${categoryId}"/>
-
-                            <!-- brand seçilibsə itirməsin -->
-                            <input type="hidden" name="brandId" th:value="${brandId}"/>
-
-                            <!-- color seçilibsə itirməsin -->
-                            <input type="hidden" name="colorId" th:value="${colorId}"/>
-
-                            <div class="price-range-area">
-                                <div id="price-range"></div>
-                                <div class="value-wrapper d-flex">
-                                    <div class="price">Price:</div>
-                                    <span>$</span>
-                                    <div id="lower-value" th:text="${minPrice}"></div>
-                                    <div class="to">to</div>
-                                    <span>$</span>
-                                    <div id="upper-value" th:text="${maxPrice}"></div>
-                                </div>
-                            </div>
-
-                            <!-- hidden input-larla minPrice və maxPrice göndəririk -->
-                            <input type="hidden" name="minPrice" th:value="${minPrice}"/>
-                            <input type="hidden" name="maxPrice" th:value="${maxPrice}"/>
-
-                            <button type="submit">Filter</button>
-                        </form>
-                    </div>
-
                 </div>
             </div>
             <div class="col-xl-9 col-lg-8 col-md-7">
@@ -206,10 +159,6 @@
                                             <span class="lnr lnr-heart"></span>
                                             <p class="hover-text">Wishlist</p>
                                         </a>
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-sync"></span>
-                                            <p class="hover-text">compare</p>
-                                        </a>
                                         <a th:href="@{|/product/${p.id}|}" class="social-info">
                                             <span class="lnr lnr-move"></span>
                                             <p class="hover-text">view more</p>
@@ -263,7 +212,7 @@
                         <div th:each="d : ${deals}" class="col-lg-4 col-md-4 col-sm-6 mb-20">
                             <div class="single-related-product d-flex">
                                 <a href="#">
-                                    <img th:src="@{${d.imageUrl}}" alt=""/>
+                                    <img th:src="${d.imageUrl}" alt=""/>
                                 </a>
                                 <div class="desc">
                                     <a th:text="${d.name}" href="#" class="title">Black lace Heels</a>
