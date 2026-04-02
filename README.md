@@ -1,6 +1,6 @@
 ## 🛒 Karma Shop — E-Commerce MVC Ecosystem
 
-#  📝 Description
+##  📝 Description
 
 Karma Shop is a comprehensive e-commerce platform designed to solve the complexity of online retail management. It provides a seamless bridge between administrative control and customer experience.
 
