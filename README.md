@@ -81,6 +81,14 @@ service/: Business logic orchestration.
 <img width="1841" height="892" alt="image" src="https://github.com/user-attachments/assets/ceb71958-7a7d-4fb3-936f-59f23e38635f" />
 <img width="1886" height="899" alt="image" src="https://github.com/user-attachments/assets/f89d5800-9de3-4c3c-abfc-c040f3b83caa" />
 <img width="1820" height="890" alt="image" src="https://github.com/user-attachments/assets/ca4e269b-7113-472d-b4bf-9c3529912fd9" />
-
-
+<img width="1810" height="882" alt="image" src="https://github.com/user-attachments/assets/e35feda0-ed0f-4e11-b64a-0378dc885c3a" />
+<img width="1821" height="895" alt="image" src="https://github.com/user-attachments/assets/3673365a-5b02-4aca-bfae-958608275840" />
+<img width="1784" height="902" alt="image" src="https://github.com/user-attachments/assets/52ff4234-da6d-4352-b016-1650d1583b24" />
+<img width="1810" height="894" alt="image" src="https://github.com/user-attachments/assets/8be26013-551c-457d-9400-362c40f215b1" />
+<img width="1797" height="881" alt="image" src="https://github.com/user-attachments/assets/5780f94f-fe96-4586-aab5-82e5a93985e5" />
+<img width="1888" height="894" alt="image" src="https://github.com/user-attachments/assets/21275ec6-07c1-4498-9974-306d227065d8" />
+<img width="1849" height="872" alt="image" src="https://github.com/user-attachments/assets/de05190c-9c96-4b23-bae7-2684ecac7198" />
+<img width="1863" height="900" alt="image" src="https://github.com/user-attachments/assets/8007626f-4eee-459b-b8d2-a7410b10e6e1" />
+<img width="1919" height="884" alt="image" src="https://github.com/user-attachments/assets/e0135b2e-1dab-480a-8556-07936997a009" />
+<img width="1903" height="889" alt="image" src="https://github.com/user-attachments/assets/d153a4d6-8792-440e-9c2b-fcc8d276fe96" />
 
