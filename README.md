@@ -1,54 +1,79 @@
-## 🛒 Karma Shop - eCommerce Web Application
-This project is a modern eCommerce "Shop Category" page built with Spring Boot and Thymeleaf. It features a dynamic hierarchical category system, product filtering, and a responsive UI based on the Karma eCommerce template.
+## 🛒 Karma Shop — E-Commerce MVC Ecosystem
 
-# 🚀 Technology Stack
-Backend: Java 17, Spring Boot 3.x
+#  📝 Description
 
-Database: PostgreSQL / MySQL (Spring Data JPA)
+Karma Shop is a comprehensive e-commerce platform designed to solve the complexity of online retail management. It provides a seamless bridge between administrative control and customer experience.
 
-Template Engine: Thymeleaf
+## What problem it solves:
 
-Architecture: MVC (Model-View-Controller)
+For Businesses: Automates inventory tracking, coupon management, and order processing via a structured Admin Dashboard.
 
-Data Mapping: ModelMapper (for Entity to DTO conversion)
+For Users: Offers a secure and intuitive shopping flow, from product discovery to secure checkout and order tracking.
 
-Frontend: Bootstrap 4, HTML5, CSS3, Linearicons
+Technically: Demonstrates how to maintain a clean, modular N-Tier architecture in a high-traffic simulation environment.
 
-# ✨ Key Features
-1. Dynamic Hierarchical Categories
-Self-Referencing Relationship: Categories are stored in the database with a parent_id to create a tree structure.
+## 🛠️ Tech Stack
+Backend: Java 17, Spring Boot 3.x, Spring Security (Role-based Auth).
 
-Optimized Fetching: The repository uses findAllByParentIsNull() to fetch only top-level categories, preventing data redundancy in the UI.
+Data: Spring Data JPA, Hibernate, PostgreSQL.
 
-Recursive Rendering: Subcategories are automatically mapped and displayed under their respective parent categories in the sidebar.
+Frontend: Thymeleaf, HTML5, CSS3.
 
-# 2. Product Management
-Grid View: Products are displayed in a clean, responsive grid layout with price, discount, and action buttons (Add to Bag, Wishlist, etc.).
+Mapping & Logic: MapStruct/ModelMapper, Lombok.
 
-DTO Pattern: Data Transfer Objects are used to ensure a clean separation between database entities and the frontend view.
+Build Tool: Maven.
 
-# 3. Advanced Filtering & Sorting
-Sidebar filters for Brands, Colors, and Price ranges.
+## ⚙️ Setup Instructions
 
-Sorting options (Default, Price, etc.) and pagination support.
+To run this project locally, follow these steps:
 
-# 📂 Key Components
-CategoryRepository: Custom JPA queries for hierarchical data fetching.
-
-CategoryServiceImpl: Business logic handling mapping from Entity to CategoryDto.
-
-category.html: A dynamic Thymeleaf template utilizing layout:decorate and th:each loops.
-
-# 🛠️ Installation & Setup
 Clone the repository:
 
 Bash
-
 git clone https://github.com/alievaleila/karma-shop.git
-Configure Database: Update src/main/resources/application.properties with your database credentials.
+Database Setup: Create a PostgreSQL database named karma_db.
 
+Build the project:
+
+Bash
+mvn clean install
 Run the application:
 
 Bash
-
 mvn spring-boot:run
+
+## 🔑 Environment Variables
+
+To run this application, you will need to add the following variables to your application.properties or system environment:
+
+SPRING_DATASOURCE_USERNAME - postgres
+
+SPRING_DATASOURCE_PASSWORD - 12345
+
+SPRING_MAIL_USERNAME - SMTP email for password reset functionality.
+
+SPRING_MAIL_PASSWORD - SMTP app password.
+
+## 🚀 Usage Examples
+
+1. Authentication Flow
+Admin Access: Use /admin/** routes to manage products and view orders.
+
+User Registration: Access /register to create a new profile and start shopping.
+
+2. Applying Coupons
+During checkout, enter a valid coupon code (e.g., SAVE20) handled by the CouponController to apply dynamic discounts to the CartTotal.
+
+3. Order Tracking
+Users can navigate to /orders/tracking to check the real-time status of their purchases (e.g., PENDING, SHIPPED, DELIVERED).
+
+📂 Architecture Preview
+The project follows a strict package structure as seen in the source:
+
+config/: Security and Bean initializations.
+
+dto/: Request/Response data encapsulation.
+
+model/: Relational Database Entities.
+
+service/: Business logic orchestration.
