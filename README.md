@@ -77,3 +77,10 @@ dto/: Request/Response data encapsulation.
 model/: Relational Database Entities.
 
 service/: Business logic orchestration.
+
+<img width="1841" height="892" alt="image" src="https://github.com/user-attachments/assets/ceb71958-7a7d-4fb3-936f-59f23e38635f" />
+<img width="1886" height="899" alt="image" src="https://github.com/user-attachments/assets/f89d5800-9de3-4c3c-abfc-c040f3b83caa" />
+<img width="1820" height="890" alt="image" src="https://github.com/user-attachments/assets/ca4e269b-7113-472d-b4bf-9c3529912fd9" />
+
+
+
