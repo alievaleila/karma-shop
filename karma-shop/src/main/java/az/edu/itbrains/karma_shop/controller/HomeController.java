@@ -58,6 +58,9 @@ public class HomeController {
             @RequestParam(value = "colorId", required = false) Long colorId,
             @RequestParam(value = "minPrice", required = false) Double minPrice,
             @RequestParam(value = "maxPrice", required = false) Double maxPrice,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "newest") String sortBy,
+            @RequestParam(value = "limit", required = false, defaultValue = "12") Integer limit,
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             Model model
     ) {
         List<CategoryDto> categoryDtoList = categoryService.getAllCategories();
@@ -71,17 +74,40 @@ public class HomeController {
         model.addAttribute("colorId", colorId);
         model.addAttribute("minPrice", minPrice);
         model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("limit", limit);
+        model.addAttribute("page", page);
 
-        List<ProductDto> productDtoList = productService.filterTop6(categoryId, brandId, colorId, minPrice, maxPrice);
+        List<ProductDto> allProducts = productService.filterAll(categoryId, brandId, colorId, minPrice, maxPrice);
 
-        model.addAttribute("products", productDtoList);
+        if ("price_low".equals(sortBy)) {
+            allProducts.sort((a, b) -> Double.compare(a.getDiscountPrice() != null ? a.getDiscountPrice() : a.getPrice(),
+                    b.getDiscountPrice() != null ? b.getDiscountPrice() : b.getPrice()));
+        } else if ("price_high".equals(sortBy)) {
+            allProducts.sort((a, b) -> Double.compare(b.getDiscountPrice() != null ? b.getDiscountPrice() : b.getPrice(),
+                    a.getDiscountPrice() != null ? a.getDiscountPrice() : a.getPrice()));
+        }
+
+
+        int totalProducts = allProducts.size();
+        int totalPages = (int) Math.ceil((double) totalProducts / limit);
+        
+        if (page < 1) page = 1;
+        if (page > totalPages && totalPages > 0) page = totalPages;
+        
+        int startIndex = (page - 1) * limit;
+        int endIndex = Math.min(startIndex + limit, totalProducts);
+        
+        List<ProductDto> paginatedProducts = allProducts.subList(startIndex, endIndex);
+
+        model.addAttribute("products", paginatedProducts);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
 
         List<DealDto> dealDtoList = dealService.getAllDeals();
         model.addAttribute("deals", dealDtoList);
         return "category";
     }
-
-    // checkout və confirmation CheckoutController-ə köçürüldü
 
     @GetMapping("/contact")
     public String contact() {
@@ -113,5 +139,58 @@ public class HomeController {
         return "single-product";
     }
 
-    // tracking TrackingController-ə köçürüldü
+    @GetMapping("/search")
+    public String search(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "newest") String sortBy,
+            @RequestParam(value = "limit", required = false, defaultValue = "12") Integer limit,
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+            Model model
+    ) {
+        List<CategoryDto> categoryDtoList = categoryService.getAllCategories();
+        model.addAttribute("categories", categoryDtoList);
+
+        model.addAttribute("brands", brandService.getAll());
+        model.addAttribute("colors", colorService.getAll());
+
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("limit", limit);
+        model.addAttribute("page", page);
+
+        List<ProductDto> allProducts;
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            allProducts = productService.searchByName(keyword);
+            model.addAttribute("searchKeyword", keyword);
+        } else {
+            allProducts = productService.getLatestProducts();
+        }
+
+        if ("price_low".equals(sortBy)) {
+            allProducts.sort((a, b) -> Double.compare(a.getDiscountPrice() != null ? a.getDiscountPrice() : a.getPrice(),
+                    b.getDiscountPrice() != null ? b.getDiscountPrice() : b.getPrice()));
+        } else if ("price_high".equals(sortBy)) {
+            allProducts.sort((a, b) -> Double.compare(b.getDiscountPrice() != null ? b.getDiscountPrice() : b.getPrice(),
+                    a.getDiscountPrice() != null ? a.getDiscountPrice() : a.getPrice()));
+        }
+
+        int totalProducts = allProducts.size();
+        int totalPages = (int) Math.ceil((double) totalProducts / limit);
+        
+        if (page < 1) page = 1;
+        if (page > totalPages && totalPages > 0) page = totalPages;
+        
+        int startIndex = (page - 1) * limit;
+        int endIndex = Math.min(startIndex + limit, totalProducts);
+        
+        List<ProductDto> paginatedProducts = allProducts.subList(startIndex, endIndex);
+
+        model.addAttribute("products", paginatedProducts);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+
+        List<DealDto> dealDtoList = dealService.getAllDeals();
+        model.addAttribute("deals", dealDtoList);
+        return "category";
+    }
+
 }

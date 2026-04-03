@@ -50,4 +50,16 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.filterTop6(categoryId, brandId, colorId, minPrice, maxPrice)
                 .stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
     }
+
+    @Override
+    public List<ProductDto> filterAll(Long categoryId, Long brandId, Long colorId, Double minPrice, Double maxPrice) {
+        return productRepository.filterAll(categoryId, brandId, colorId, minPrice, maxPrice)
+                .stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
+    }
+
+    @Override
+    public List<ProductDto> searchByName(String keyword) {
+        return productRepository.findByNameContainingIgnoreCaseOrderByIdDesc(keyword)
+                .stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
+    }
 }

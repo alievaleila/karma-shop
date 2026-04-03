@@ -33,19 +33,18 @@ public class AdminDashboardController {
         model.addAttribute("currentPage", "dashboard");
         model.addAttribute("pageTitle", "Dashboard");
 
-        // Stats
         model.addAttribute("totalProducts", productRepository.count());
         model.addAttribute("totalCategories", categoryRepository.count());
         model.addAttribute("totalOrders", orderRepository.count());
         model.addAttribute("totalUsers", userRepository.count());
 
-        // Recent Orders (last 5)
+
         List<Order> recentOrders = orderRepository.findAll(
                 PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdAt"))
         ).getContent();
         model.addAttribute("recentOrders", recentOrders);
 
-        // Recent Contacts (last 5)
+
         List<Contact> recentContacts = contactRepository.findAll(
                 PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdAt"))
         ).getContent();

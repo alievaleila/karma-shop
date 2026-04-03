@@ -48,7 +48,6 @@ public class Order {
     @Builder.Default
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    // Billing Information
     private String firstName;
     private String lastName;
     private String email;
@@ -63,10 +62,8 @@ public class Order {
     private String district;
     private String zipCode;
 
-    // Order Notes
     private String orderNotes;
 
-    // Shipping Information
     private boolean shipToDifferentAddress;
     private String shippingFirstName;
     private String shippingLastName;
@@ -77,14 +74,12 @@ public class Order {
     private String shippingDistrict;
     private String shippingZipCode;
 
-    // Pricing
     private Double subtotal;
     private Double shippingCost;
     private Double discount;
     private String couponCode;
     private Double total;
 
-    // Payment & Status
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 

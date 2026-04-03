@@ -3,6 +3,90 @@
       layout:decorate="~{layout}">
 <head>
     <title>Home</title>
+    <style>
+        /* Cart button styling */
+        .gray_btn, .primary-btn {
+            height: 45px;
+            padding: 10px 25px !important;
+            line-height: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            border-radius: 0px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .gray_btn {
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+        }
+        
+        .gray_btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .primary-btn {
+            background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+            color: white;
+            min-width: 150px;
+        }
+        
+        .primary-btn:hover {
+            background: linear-gradient(90deg, #ff6c00 0%, #ffba00 100%);
+            transform: translateY(-2px);
+        }
+        
+        .checkout_btn_inner {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .checkout_btn_inner a {
+            min-width: 150px;
+            height: 45px;
+        }
+        
+        .cupon_text, .cupon_applied {
+            gap: 10px;
+        }
+        
+        .cupon_text form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .cupon_text input[type="text"] {
+            height: 45px;
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 0px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .cupon_text button, .cupon_applied button {
+            height: 45px;
+            padding: 10px 25px;
+            line-height: 25px;
+            min-width: 150px;
+        }
+        
+        .bottom_button td {
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body>
@@ -75,39 +159,37 @@
                             </td>
                         </tr>
                         <tr class="bottom_button">
-                            <td>
-                                <a class="gray_btn" href="#" onclick="updateCart(); return false;">Update Cart</a>
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-                                <!-- Coupon not applied - show form -->
-                                <div th:if="${appliedCouponCode == null}" class="cupon_text d-flex align-items-center">
-                                    <form th:action="@{/coupon/apply}" method="post" class="d-flex align-items-center">
-                                        <input type="text" name="code" placeholder="Enter Coupon Code" required>
-                                        <button type="submit" class="primary-btn">Apply</button>
-                                    </form>
-                                </div>
-                                <!-- Coupon applied - show remove option -->
-                                <div th:if="${appliedCouponCode != null}" class="cupon_applied d-flex align-items-center">
-                                    <span class="text-success" style="margin-right: 15px;">
-                                        <i class="fa fa-check-circle"></i> 
-                                        Coupon <strong th:text="${appliedCouponCode}"></strong> applied!
-                                    </span>
-                                    <form th:action="@{/coupon/remove}" method="post">
-                                        <button type="submit" class="gray_btn">Remove</button>
-                                    </form>
-                                </div>
-                                <!-- Flash messages -->
-                                <div th:if="${couponSuccess}" class="alert alert-success" style="margin-top: 10px;">
-                                    <span th:text="${couponSuccess}"></span>
-                                </div>
-                                <div th:if="${couponError}" class="alert alert-danger" style="margin-top: 10px;">
-                                    <span th:text="${couponError}"></span>
+                            <td colspan="5">
+                                <div class="d-flex justify-content-between align-items-center" style="flex-wrap: wrap; gap: 15px;">
+                                    <div>
+                                        <a class="gray_btn" href="#" onclick="updateCart(); return false;">Update Cart</a>
+                                    </div>
+                                    <div style="flex: 1; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; align-items: center;">
+                                        <!-- Coupon not applied - show form -->
+                                        <div th:if="${appliedCouponCode == null}" class="cupon_text d-flex align-items-center">
+                                            <form th:action="@{/coupon/apply}" method="post" class="d-flex align-items-center" style="gap: 10px;">
+                                                <input type="text" name="code" placeholder="Enter Coupon Code" required>
+                                                <button type="submit" class="primary-btn">Apply</button>
+                                            </form>
+                                        </div>
+                                        <!-- Coupon applied - show remove option -->
+                                        <div th:if="${appliedCouponCode != null}" class="cupon_applied d-flex align-items-center">
+                                            <span class="text-success">
+                                                <i class="fa fa-check-circle"></i> 
+                                                Coupon <strong th:text="${appliedCouponCode}"></strong> applied!
+                                            </span>
+                                            <form th:action="@{/coupon/remove}" method="post">
+                                                <button type="submit" class="gray_btn">Remove</button>
+                                            </form>
+                                        </div>
+                                        <!-- Flash messages -->
+                                        <div th:if="${couponSuccess}" class="alert alert-success" style="margin: 0;">
+                                            <span th:text="${couponSuccess}"></span>
+                                        </div>
+                                        <div th:if="${couponError}" class="alert alert-danger" style="margin: 0;">
+                                            <span th:text="${couponError}"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -140,19 +222,10 @@
                             <td><h5><strong th:text="'$' + ${#numbers.formatDecimal(finalTotal, 1, 2)}">$0.00</strong></h5></td>
                         </tr>
                         <tr class="out_button_area">
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-                                <div class="checkout_btn_inner d-flex align-items-center">
+                            <td colspan="5">
+                                <div style="display: flex; justify-content: flex-end; gap: 15px;">
                                     <a class="gray_btn" href="/category">Continue Shopping</a>
-                                    <a class="primary-btn" href="/checkout">Proceed to checkout</a>
+                                    <a class="primary-btn" href="/checkout">Proceed to Checkout</a>
                                 </div>
                             </td>
                         </tr>

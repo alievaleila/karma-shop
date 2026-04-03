@@ -15,4 +15,8 @@ public interface ProductService {
     ProductDto getById(Long id);
 
     List<ProductDto> filterTop6(Long categoryId, Long brandId, Long colorId, Double minPrice, Double maxPrice);
+
+    List<ProductDto> filterAll(Long categoryId, Long brandId, Long colorId, Double minPrice, Double maxPrice);
+
+    List<ProductDto> searchByName(String keyword);
 }

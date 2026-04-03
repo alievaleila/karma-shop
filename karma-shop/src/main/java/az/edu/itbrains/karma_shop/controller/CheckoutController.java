@@ -169,7 +169,6 @@ public class CheckoutController {
 
         Order savedOrder = orderService.createOrder(order);
 
-        // Send Telegram notification
         telegramService.sendOrderNotification(savedOrder);
 
         cartService.clearCart(username);

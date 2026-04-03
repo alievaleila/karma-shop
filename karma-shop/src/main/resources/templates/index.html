@@ -134,15 +134,110 @@
                     </div>
                 </div>
             </div>
+            <style>
+                .category-card {
+                    border: none;
+                    border-radius: 15px;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                    overflow: hidden;
+                    min-height: 200px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    position: relative;
+                }
+
+                .category-card::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(255, 255, 255, 0.1);
+                    transition: all 0.3s ease;
+                    opacity: 0;
+                }
+
+                .category-card:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+                }
+
+                .category-card:hover::before {
+                    opacity: 1;
+                }
+
+                .category-card.card-1 {
+                    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+                }
+
+                .category-card.card-2 {
+                    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+                }
+
+                .category-card.card-3 {
+                    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+                }
+
+                .category-card.card-4 {
+                    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+                }
+
+                .category-card.card-5 {
+                    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+                }
+
+                .category-card.card-6 {
+                    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+                }
+
+                .category-card-body {
+                    text-align: center;
+                    width: 100%;
+                    padding: 40px 20px;
+                    position: relative;
+                    z-index: 1;
+                }
+
+                .category-card-title {
+                    color: white;
+                    font-size: 24px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                    margin: 0;
+                    transition: all 0.3s ease;
+                }
+
+                .category-card:hover .category-card-title {
+                    transform: scale(1.05);
+                }
+
+                .category-card-icon {
+                    font-size: 48px;
+                    margin-bottom: 15px;
+                    display: block;
+                }
+            </style>
+
             <div class="row">
-                <div th:each="c : ${categories}" class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">
-                                <a th:href="@{/category(id=${c.id})}" th:text="${c.name}" class="text-dark">Category Name</a>
-                            </h5>
+                <div th:each="c,iter : ${categories}" class="col-lg-4 col-md-6 mb-4">
+                    <a th:href="@{/category(id=${c.id})}" class="category-card h-100" th:classappend="${'card-' + ((iter.index % 6) + 1)}">
+                        <div class="category-card-body">
+                            <span class="category-card-icon" th:switch="${iter.index % 5}">
+                                <i th:case="0" class="fa fa-mars"></i>
+                                <i th:case="1" class="fa fa-venus"></i>
+                                <i th:case="2" class="fa fa-child"></i>
+                                <i th:case="3" class="fa fa-star"></i>
+                                <i th:case="*" class="fa fa-heart"></i>
+                            </span>
+                            <h5 class="category-card-title" th:text="${c.name}">Category Name</h5>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -165,7 +260,7 @@
                 <!-- single product -->
                 <div th:each="p:${products}" class="col-lg-3 col-md-6">
                     <div class="single-product">
-                        <img class="img-fluid" th:src="${p.imageUrl}" alt="">
+                        <img class="img-fluid" th:src="@{${p.imageUrl}}" alt="">
                         <div class="product-details">
                             <h6 th:text="${p.name}">addidas New Hammer sole
                                 for Sports person</h6>
@@ -181,14 +276,14 @@
                                     </button>
                                     <p class="hover-text">Add to bag</p>
                                 </form>
-                                <a href="" class="social-info">
-                                    <span class="lnr lnr-heart"></span>
+                                <form th:action="@{/wishlist/add}" method="post" class="social-info-form">
+                                    <input type="hidden" name="productId" th:value="${p.id}" />
+                                    <input type="hidden" name="redirectUrl" value="/" />
+                                    <button type="submit" class="social-info-btn">
+                                        <span class="lnr lnr-heart"></span>
+                                    </button>
                                     <p class="hover-text">Wishlist</p>
-                                </a>
-                                <a href="" class="social-info">
-                                    <span class="lnr lnr-sync"></span>
-                                    <p class="hover-text">Compare</p>
-                                </a>
+                                </form>
                                 <a th:href="@{/product/{id}(id=${p.id})}" class="social-info">
                                     <span class="lnr lnr-move"></span>
                                     <p class="hover-text">View More</p>

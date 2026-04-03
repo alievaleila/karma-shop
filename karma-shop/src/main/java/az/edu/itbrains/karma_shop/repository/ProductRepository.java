@@ -34,4 +34,24 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("minPrice") Double minPrice,
             @Param("maxPrice") Double maxPrice
     );
+
+    @Query(value = """
+            SELECT p.*
+            FROM products p
+            WHERE (:categoryId IS NULL OR p.category_id = :categoryId)
+              AND (:brandId IS NULL OR p.brand_id = :brandId)
+              AND (:colorId IS NULL OR p.color_id = :colorId)
+              AND (:minPrice IS NULL OR p.price >= :minPrice)
+              AND (:maxPrice IS NULL OR p.price <= :maxPrice)
+            ORDER BY p.id DESC
+            """, nativeQuery = true)
+    List<Product> filterAll(
+            @Param("categoryId") Long categoryId,
+            @Param("brandId") Long brandId,
+            @Param("colorId") Long colorId,
+            @Param("minPrice") Double minPrice,
+            @Param("maxPrice") Double maxPrice
+    );
+
+    List<Product> findByNameContainingIgnoreCaseOrderByIdDesc(String name);
 }

@@ -48,7 +48,6 @@ public class AdminUserController {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("İstifadəçi tapılmadı"));
 
-        // Admin istifadəçisini silməyə icazə vermə
         if (user.getUsername().toLowerCase().contains("admin")) {
             redirectAttributes.addFlashAttribute("errorMessage", "Admin istifadəçisini silmək olmaz!");
             return "redirect:/admin/users";

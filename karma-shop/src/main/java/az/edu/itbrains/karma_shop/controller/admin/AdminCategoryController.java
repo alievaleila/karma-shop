@@ -41,7 +41,8 @@ public class AdminCategoryController {
     public String addCategoryForm(Model model) {
         model.addAttribute("currentPage", "categories");
         model.addAttribute("pageTitle", "Yeni Kateqoriya");
-        model.addAttribute("category", new CategoryFormDto());    return "admin/category-form";
+        model.addAttribute("category", new CategoryFormDto());
+        return "admin/category-form";
     }
 
     @PostMapping("/add")

@@ -63,6 +63,7 @@
                         <li class="nav-item active"><a class="nav-link" href="/login">Login</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item active"><a href="/wishlist" class="cart"><span class="lnr lnr-heart"></span></a></li>
                         <li class="nav-item active"><a href="/cart" class="cart"><span class="ti-bag"></span></a></li>
                         <li class="nav-item active">
                             <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
@@ -74,8 +75,8 @@
     </div>
     <div class="search_input" id="search_input_box">
         <div class="container">
-            <form class="d-flex justify-content-between">
-                <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+            <form class="d-flex justify-content-between" method="get" action="/search">
+                <input type="text" class="form-control" id="search_input" name="keyword" placeholder="Search Here">
                 <button type="submit" class="btn"></button>
                 <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
             </form>

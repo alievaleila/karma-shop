@@ -25,7 +25,6 @@ public class CouponDataInitializer implements CommandLineRunner {
     }
 
     private void createSampleCoupons() {
-        // 10% discount coupon
         Coupon percentageCoupon = Coupon.builder()
                 .code("SAVE10")
                 .discountType(Coupon.DiscountType.PERCENTAGE)
@@ -40,7 +39,6 @@ public class CouponDataInitializer implements CommandLineRunner {
                 .build();
         couponRepository.save(percentageCoupon);
 
-        // 20% discount coupon
         Coupon bigSaleCoupon = Coupon.builder()
                 .code("BIGSALE20")
                 .discountType(Coupon.DiscountType.PERCENTAGE)
@@ -55,7 +53,6 @@ public class CouponDataInitializer implements CommandLineRunner {
                 .build();
         couponRepository.save(bigSaleCoupon);
 
-        // Fixed $15 discount coupon
         Coupon fixedCoupon = Coupon.builder()
                 .code("FLAT15")
                 .discountType(Coupon.DiscountType.FIXED_AMOUNT)
@@ -69,7 +66,6 @@ public class CouponDataInitializer implements CommandLineRunner {
                 .build();
         couponRepository.save(fixedCoupon);
 
-        // Welcome coupon - 5% for new users
         Coupon welcomeCoupon = Coupon.builder()
                 .code("WELCOME5")
                 .discountType(Coupon.DiscountType.PERCENTAGE)

@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 
 @Configuration
 @EnableWebSecurity
@@ -50,7 +52,7 @@ public class SecurityConfig {
                                 "/front/**", "/css/**", "/js/**", "/img/**"
                         ).permitAll()
                         .requestMatchers("/admin", "/admin/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/cart/**", "/checkout/**", "/confirmation/**").authenticated()
+                        .requestMatchers("/cart", "/cart/**", "/checkout", "/checkout/**", "/confirmation", "/confirmation/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
@@ -62,6 +64,7 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
                 )
+                .requestCache(cache -> cache.requestCache(new HttpSessionRequestCache()))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
@@ -74,11 +77,27 @@ public class SecurityConfig {
         return (request, response, authentication) -> {
             boolean isAdmin = authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-            if (isAdmin) {
-                response.sendRedirect("/admin");
-            } else {
-                response.sendRedirect("/");
+            
+            RequestCache requestCache = new HttpSessionRequestCache();
+            String targetUrl = "/";
+            
+            try {
+                var savedRequest = requestCache.getRequest(request, response);
+                if (savedRequest != null) {
+                    String redirectUrl = savedRequest.getRedirectUrl();
+                    if (redirectUrl != null && !redirectUrl.contains("/login") && !redirectUrl.contains("/register")) {
+                        targetUrl = redirectUrl;
+                    }
+                }
+            } catch (Exception e) {
+                // Continue with default redirect
             }
+            
+            if (targetUrl.equals("/") && isAdmin) {
+                targetUrl = "/admin";
+            }
+            
+            response.sendRedirect(targetUrl);
         };
     }
 }
